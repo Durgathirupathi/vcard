@@ -2,10 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, isFirebaseConfigured } from '../../lib/firebase';
 import { dbService } from '../../lib/firestore';
-import { Key, Mail, AlertTriangle, ShieldCheck, ArrowRight, UserCheck } from 'lucide-react';
+import { Key, Mail, AlertTriangle, ShieldCheck, ArrowRight, UserCheck, ArrowLeft, Sparkles } from 'lucide-react';
 import { AppUser } from '../../types';
 
 export default function LoginPage() {
@@ -15,6 +16,7 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [checkingSession, setCheckingSession] = useState(true);
 
   // If already logged in, redirect to dashboard
   useEffect(() => {
@@ -22,6 +24,8 @@ export default function LoginPage() {
       const localAuth = localStorage.getItem('vcard_admin_logged');
       if (localAuth === 'true') {
         router.push('/admin');
+      } else {
+        setCheckingSession(false);
       }
     }
   }, [router]);
@@ -138,8 +142,38 @@ export default function LoginPage() {
     setError('');
   };
 
+  if (checkingSession) {
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center bg-slate-50 text-slate-800 font-sans">
+        <div className="flex flex-col items-center gap-4 animate-fadeIn">
+          <div className="p-4 bg-indigo-50 border border-indigo-100 rounded-full text-indigo-650 animate-spin">
+            <Sparkles className="w-8 h-8" />
+          </div>
+          <span className="text-xs font-bold text-slate-550 uppercase tracking-widest">
+            Verifying Admin Session...
+          </span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-slate-50 text-slate-800 font-sans">
+      
+      {/* Full screen loading redirection overlay */}
+      {success && (
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center animate-fadeIn">
+          <div className="bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center gap-4 max-w-sm mx-4 border border-slate-100">
+            <div className="p-4 bg-indigo-50 border border-indigo-100 rounded-full text-indigo-650 animate-spin">
+              <Sparkles className="w-8 h-8" />
+            </div>
+            <h3 className="text-sm font-black text-slate-900">Access Authorized</h3>
+            <p className="text-xs text-slate-500 text-center font-medium leading-relaxed">
+              Retrieving tenant credentials and building admin workspace. Redirecting...
+            </p>
+          </div>
+        </div>
+      )}
       
       {/* Centered Classic White Panel */}
       <div className="w-full max-w-md px-6 py-8 mx-4 bg-white border border-slate-200 rounded-2xl shadow-md flex flex-col items-center">
@@ -227,6 +261,15 @@ export default function LoginPage() {
             {loading ? 'Authenticating...' : 'Authorize Access'}
             <ArrowRight className="w-4 h-4" />
           </button>
+
+          {/* Back to Home Button */}
+          <Link
+            href="/"
+            className="w-full py-3 border border-slate-200 hover:border-slate-350 bg-white hover:bg-slate-50 text-slate-650 hover:text-slate-800 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 active:scale-[0.99] shadow-sm"
+          >
+            <ArrowLeft className="w-4 h-4 text-slate-500" />
+            Back to Home
+          </Link>
         </form>
 
         {/* Fallback Auto-Fill Quick Link */}
