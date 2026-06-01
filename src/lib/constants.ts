@@ -1,0 +1,4 @@
+export const PORTAL_LIMITS = {
+  MAX_SERVICES: 20,
+  MAX_GALLERY_IMAGES: 10,
+};
