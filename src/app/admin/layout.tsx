@@ -65,12 +65,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (checking) {
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-slate-950 text-slate-100">
+      <div className="min-h-screen w-full flex items-center justify-center bg-slate-50 text-slate-800 font-sans">
         <div className="flex flex-col items-center gap-4">
-          <div className="p-4 bg-indigo-600/10 border border-indigo-500/20 rounded-full text-indigo-400 animate-spin">
+          <div className="p-4 bg-indigo-50 border border-indigo-100 rounded-full text-indigo-650 animate-spin">
             <Sparkles className="w-8 h-8" />
           </div>
-          <span className="text-sm font-semibold text-slate-400 uppercase tracking-widest">
+          <span className="text-xs font-bold text-slate-550 uppercase tracking-widest">
             Loading Admin Workspace...
           </span>
         </div>
@@ -83,7 +83,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="min-h-screen flex bg-slate-950 text-slate-100 overflow-x-hidden font-sans">
+    <div className="min-h-screen flex bg-slate-50 text-slate-800 overflow-x-hidden font-sans">
       {/* Sidebar Navigation */}
       <Sidebar 
         isMobileOpen={isMobileOpen} 
@@ -93,18 +93,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main Administrative Container */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile Header Bar */}
-        <header className="md:hidden flex items-center justify-between px-6 py-4 bg-slate-900 border-b border-slate-800">
+        <header className="md:hidden flex items-center justify-between px-6 py-4 bg-white border-b border-slate-200">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 bg-indigo-600/10 border border-indigo-500/20 rounded-lg text-indigo-400">
+            <div className="p-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-indigo-650">
               <Sparkles className="w-4 h-4" />
             </div>
-            <span className="font-extrabold text-sm tracking-tight bg-gradient-to-r from-indigo-200 via-indigo-100 to-purple-200 bg-clip-text text-transparent">
+            <span className="font-extrabold text-sm tracking-tight text-slate-900">
               VCard Studio
             </span>
           </div>
           <button
             onClick={() => setIsMobileOpen(true)}
-            className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-colors"
+            className="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors"
           >
             <Menu className="w-5 h-5" />
           </button>

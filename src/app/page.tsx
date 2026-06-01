@@ -43,6 +43,9 @@ export default function LandingPage() {
               <Info className="w-3.5 h-3.5" />
               About Us
             </Link>
+            <Link href="/contact" className="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-950 transition-colors flex items-center gap-1">
+              Contact Us
+            </Link>
           </div>
         </div>
       </nav>
@@ -101,10 +104,14 @@ export default function LandingPage() {
         <div className="text-slate-500 text-[10px] uppercase font-bold tracking-widest">
           © VCard Studio. Premium Identity Systems. All Rights Reserved.
         </div>
-        <div className="mt-3">
+        <div className="mt-3 flex items-center justify-center gap-4 text-[9px] font-bold uppercase tracking-wider text-slate-400">
+          <Link href="/contact" className="hover:text-slate-700 transition-colors hover:underline">
+            Support Inquiry
+          </Link>
+          <span>•</span>
           <Link 
             href="/login" 
-            className="text-[9px] font-bold uppercase tracking-wider text-slate-400 hover:text-slate-700 transition-colors hover:underline"
+            className="hover:text-slate-700 transition-colors hover:underline"
           >
             Administrative Console Login
           </Link>

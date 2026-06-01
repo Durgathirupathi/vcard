@@ -24,7 +24,15 @@ import {
   Filter,
   X,
   Lock,
-  UserCheck
+  UserCheck,
+  Activity,
+  Smartphone,
+  Laptop,
+  Tablet,
+  CheckCircle,
+  Database,
+  CloudLightning,
+  Send
 } from 'lucide-react';
 
 export default function AdminDashboard() {
@@ -75,7 +83,7 @@ export default function AdminDashboard() {
             gUsage[activeUser.businessId] = g.length;
           }
         } else {
-          // Aggregate data for admin — leads not shown to super admin
+          // Aggregate data for admin
           fetchCards = await dbService.getBusinesses();
           fetchAnalytics = await dbService.getAnalytics();
           
@@ -124,7 +132,7 @@ export default function AdminDashboard() {
 
     try {
       await dbService.resetOwnerPassword(resettingCardId, newPassword);
-      setResetSuccessMsg('Credentials reset successfully! Bypass maps updated.');
+      setResetSuccessMsg('Credentials reset successfully!');
       setNewPassword('');
       setTimeout(() => {
         setResettingCardId(null);
@@ -147,16 +155,16 @@ export default function AdminDashboard() {
 
   const stats = isOwner 
     ? [
-        { name: 'My Profile Status', value: ownerCard?.status === 'inactive' ? 'Inactive' : 'Active', icon: ShieldCheck, color: ownerCard?.status === 'inactive' ? 'from-rose-600 to-red-500' : 'from-indigo-600 to-blue-500', trend: 'Account active & live' },
-        { name: 'Leads Received', value: totalLeadsCount, icon: Mail, color: 'from-emerald-600 to-teal-500', trend: 'Ready for conversion' },
-        { name: 'Total Views', value: totalViews, icon: Eye, color: 'from-purple-600 to-pink-500', trend: 'Tracing dynamic visits' },
-        { name: 'Unique Visitors', value: Math.max(1, Math.round(totalViews * 0.72)), icon: Users, color: 'from-amber-600 to-orange-500', trend: '72% average conversion' },
+        { name: 'My Profile Status', value: ownerCard?.status === 'inactive' ? 'Inactive' : 'Active', icon: ShieldCheck, color: 'bg-indigo-50 border border-indigo-100 text-indigo-700', trend: 'Account active & live' },
+        { name: 'Leads Received', value: totalLeadsCount, icon: Mail, color: 'bg-emerald-50 border border-emerald-100 text-emerald-700', trend: 'Ready for conversion' },
+        { name: 'Total Views', value: totalViews, icon: Eye, color: 'bg-amber-50 border border-amber-100 text-amber-700', trend: 'Tracing dynamic visits' },
+        { name: 'Unique Visitors', value: Math.max(1, Math.round(totalViews * 0.72)), icon: Users, color: 'bg-slate-100 border border-slate-200 text-slate-700', trend: '72% average conversion' },
       ]
     : [
-        { name: 'Total Businesses', value: totalCardsCount, icon: CreditCard, color: 'from-indigo-600 to-blue-500', trend: 'Registered accounts' },
-        { name: 'Active Accounts', value: activeCardsCount, icon: ShieldCheck, color: 'from-emerald-600 to-teal-500', trend: 'Live profiles' },
-        { name: 'Inactive Accounts', value: inactiveCardsCount, icon: Lock, color: 'from-rose-600 to-red-500', trend: 'Blocked portals' },
-        { name: 'Total Page Views', value: totalViews, icon: Eye, color: 'from-amber-600 to-orange-500', trend: 'Aggregated analytics' },
+        { name: 'Total Businesses', value: totalCardsCount, icon: CreditCard, color: 'bg-indigo-50 border border-indigo-100 text-indigo-700', trend: 'Registered accounts' },
+        { name: 'Active Accounts', value: activeCardsCount, icon: ShieldCheck, color: 'bg-emerald-50 border border-emerald-100 text-emerald-700', trend: 'Live profiles' },
+        { name: 'Inactive Accounts', value: inactiveCardsCount, icon: Lock, color: 'bg-rose-50 border border-rose-100 text-rose-700', trend: 'Blocked portals' },
+        { name: 'Total Page Views', value: totalViews, icon: Eye, color: 'bg-amber-50 border border-amber-100 text-amber-700', trend: 'Aggregated analytics' },
       ];
 
   // Super Admin Filtering
@@ -180,7 +188,7 @@ export default function AdminDashboard() {
     return (
       <div className="flex-1 flex items-center justify-center min-h-[60vh]">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-indigo-650 border-t-transparent rounded-full animate-spin" />
           <span className="text-sm font-semibold text-slate-400">Fetching workspace metrics...</span>
         </div>
       </div>
@@ -188,14 +196,15 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="space-y-10">
-      {/* Dashboard Top Header Banner */}
+    <div className="space-y-8 animate-fadeIn text-slate-800">
+      
+      {/* Dashboard Top Header Banner - Clean Solid Accent */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-slate-100 to-slate-300 bg-clip-text text-transparent">
-            {isOwner ? 'Business Dashboard' : 'Centralized Portal Management'}
+          <h1 className="text-3xl font-black tracking-tight text-slate-900">
+            {isOwner ? 'Workspace Dashboard' : 'Centralized Portal Management'}
           </h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-slate-500 text-sm mt-1 font-medium leading-relaxed">
             {isOwner 
               ? `Manage your card details, view recent inquiries, and trace usage limits for ${ownerCard?.businessName || 'your card'}.`
               : 'Audit active tenant cards, toggle account statuses, reset credentials, and monitor uploader limits.'
@@ -208,7 +217,7 @@ export default function AdminDashboard() {
           <div className="flex items-center gap-3">
             <Link
               href="/admin/cards/new"
-              className="px-5 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-950/40 transition-all flex items-center gap-2 hover:scale-[1.02]"
+              className="px-5 py-3 bg-indigo-600 hover:bg-indigo-750 text-white rounded-xl text-xs font-black shadow-sm transition-all flex items-center gap-2 hover:scale-[1.01]"
             >
               <PlusCircle className="w-4.5 h-4.5" />
               Build New VCard
@@ -217,34 +226,32 @@ export default function AdminDashboard() {
         )}
       </div>
 
-      {/* Grid Statistics widgets */}
+      {/* Grid Statistics Widgets - Clean White Theme */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, idx) => {
           const Icon = stat.icon;
           return (
             <div 
               key={idx}
-              className="relative p-6 bg-slate-900/50 backdrop-blur-md border border-slate-800/80 rounded-2xl flex flex-col justify-between overflow-hidden group shadow-lg"
+              className="p-6 bg-white border border-slate-200 rounded-2xl flex flex-col justify-between shadow-sm relative overflow-hidden group"
             >
-              <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-all duration-300" />
-              
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                <span className="text-[10px] font-black text-slate-450 uppercase tracking-widest">
                   {stat.name}
                 </span>
-                <div className={`p-2.5 bg-gradient-to-br ${stat.color} text-white rounded-xl`}>
+                <div className={`p-2.5 rounded-xl ${stat.color}`}>
                   <Icon className="w-5 h-5" />
                 </div>
               </div>
 
               <div className="mt-4 flex items-baseline gap-2">
-                <span className="text-3xl font-extrabold tracking-tight text-white">
+                <span className="text-3xl font-black tracking-tight text-slate-900">
                   {stat.value}
                 </span>
               </div>
 
-              <div className="mt-2 text-xs text-slate-500 font-semibold flex items-center gap-1.5 border-t border-slate-850 pt-2">
-                <TrendingUp className="w-3.5 h-3.5 text-emerald-500" />
+              <div className="mt-4 text-[10px] text-slate-500 font-bold flex items-center gap-1.5 border-t border-slate-100 pt-3">
+                <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
                 {stat.trend}
               </div>
             </div>
@@ -252,7 +259,7 @@ export default function AdminDashboard() {
         })}
       </div>
 
-      {/* Primary Panels Split Section */}
+      {/* Primary Panels Split Section - Clean White surfaces */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Left Column: Business Management Directory or Owner Showcase */}
@@ -263,23 +270,22 @@ export default function AdminDashboard() {
             // ==========================================
             <>
               {/* Profile Card Summary */}
-              <h2 className="text-xl font-bold tracking-tight text-slate-200 pl-1">
+              <h2 className="text-lg font-extrabold tracking-tight text-slate-900 pl-0.5">
                 Profile Management
               </h2>
               {ownerCard ? (
-                <div className="relative overflow-hidden bg-slate-900/40 border border-slate-800/80 rounded-2xl shadow-xl flex flex-col justify-between p-6 group">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/5 rounded-full blur-3xl pointer-events-none group-hover:bg-indigo-600/10 transition-all duration-500" />
+                <div className="relative overflow-hidden bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col justify-between p-6">
                   
                   {/* Card Cover Banner & Avatar preview */}
-                  <div className="relative w-full h-36 rounded-xl overflow-hidden bg-slate-950 border border-slate-800/60 mb-4">
+                  <div className="relative w-full h-36 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 mb-4">
                     {ownerCard.coverImage ? (
                       <img 
                         src={ownerCard.coverImage} 
                         alt="Cover image" 
-                        className="w-full h-full object-cover opacity-80"
+                        className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-r from-indigo-950/40 to-slate-950" />
+                      <div className="w-full h-full bg-slate-200" />
                     )}
                     
                     <div className="absolute bottom-4 left-6 flex items-end gap-4">
@@ -287,19 +293,19 @@ export default function AdminDashboard() {
                         <img 
                           src={ownerCard.profileImage} 
                           alt={ownerCard.ownerName}
-                          className="w-16 h-16 rounded-full object-cover border-2 border-indigo-500 shadow-md bg-slate-900"
+                          className="w-16 h-16 rounded-full object-cover border-2 border-white shadow bg-white p-0.5"
                         />
                       ) : (
-                        <div className="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center font-bold text-xl text-indigo-400 border-2 border-indigo-500 shadow-md">
+                        <div className="w-16 h-16 bg-indigo-650 rounded-full flex items-center justify-center font-bold text-xl text-white border-2 border-white shadow">
                           {ownerCard.ownerName.charAt(0)}
                         </div>
                       )}
                       
                       <div className="mb-1 text-left">
-                        <span className="block text-lg font-extrabold text-white leading-tight drop-shadow-md">
+                        <span className="block text-lg font-black text-white leading-tight drop-shadow-md">
                           {ownerCard.businessName}
                         </span>
-                        <span className="block text-xs font-semibold text-slate-300 drop-shadow-md">
+                        <span className="block text-xs font-bold text-slate-100 drop-shadow-md">
                           {ownerCard.ownerName}
                         </span>
                       </div>
@@ -307,14 +313,14 @@ export default function AdminDashboard() {
                   </div>
 
                   {/* Card metadata list */}
-                  <div className="grid grid-cols-2 gap-4 my-2 text-sm text-slate-350 border-b border-slate-850 pb-4">
+                  <div className="grid grid-cols-2 gap-4 my-2 text-xs text-slate-600 border-b border-slate-100 pb-4">
                     <div>
-                      <span className="block text-[10px] text-slate-500 uppercase font-bold tracking-wider">Category</span>
-                      <span className="font-semibold text-slate-300">{ownerCard.category}</span>
+                      <span className="block text-[9px] text-slate-450 uppercase font-black tracking-widest">Category</span>
+                      <span className="font-bold text-slate-800">{ownerCard.category}</span>
                     </div>
                     <div>
-                      <span className="block text-[10px] text-slate-500 uppercase font-bold tracking-wider">Active Template</span>
-                      <span className="inline-block px-2.5 py-0.5 mt-0.5 bg-indigo-950/40 border border-indigo-800/30 text-indigo-400 rounded-full text-xs font-bold uppercase">
+                      <span className="block text-[9px] text-slate-455 uppercase font-black tracking-widest">Active Template</span>
+                      <span className="inline-block px-3 py-1 mt-1 bg-indigo-50 border border-indigo-100 text-indigo-700 rounded-full text-[10px] font-black uppercase">
                         {ownerCard.templateId.replace('template', 'Template ')}
                       </span>
                     </div>
@@ -325,10 +331,10 @@ export default function AdminDashboard() {
                     <div className="flex items-center gap-2 w-full sm:w-auto">
                       <button
                         onClick={() => handleCopyLink(ownerCard.slug)}
-                        className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border text-xs font-bold transition-all w-full sm:w-auto ${
+                        className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border text-xs font-black transition-colors w-full sm:w-auto ${
                           copySuccess 
-                            ? 'bg-emerald-950/40 border-emerald-500 text-emerald-400' 
-                            : 'bg-slate-950 border-slate-850 hover:border-slate-700 text-slate-300 hover:text-white'
+                            ? 'bg-emerald-50 border-emerald-250 text-emerald-800' 
+                            : 'bg-slate-50 border-slate-200 hover:border-slate-350 text-slate-700 hover:text-slate-900'
                         }`}
                       >
                         <Share2 className="w-4 h-4" />
@@ -338,7 +344,7 @@ export default function AdminDashboard() {
                       <Link
                         href={`/${ownerCard.slug}`}
                         target="_blank"
-                        className="p-2.5 bg-slate-950 border border-slate-850 hover:border-slate-750 text-slate-300 hover:text-white rounded-xl transition-all"
+                        className="p-2.5 bg-slate-50 border border-slate-200 hover:border-slate-350 text-slate-600 hover:text-slate-900 rounded-xl transition-all"
                         title="Open Card"
                       >
                         <ExternalLink className="w-4.5 h-4.5" />
@@ -347,7 +353,7 @@ export default function AdminDashboard() {
 
                     <Link
                       href={`/admin/cards/edit/${ownerCard.id}`}
-                      className="flex items-center justify-center gap-2 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-indigo-950/20 w-full sm:w-auto hover:scale-[1.02]"
+                      className="flex items-center justify-center gap-2 px-6 py-2.5 bg-indigo-650 hover:bg-indigo-750 text-white rounded-xl text-xs font-black transition-colors shadow-sm w-full sm:w-auto"
                     >
                       <Settings className="w-4 h-4" />
                       Configure Card Settings
@@ -355,30 +361,30 @@ export default function AdminDashboard() {
                   </div>
                 </div>
               ) : (
-                <div className="p-8 bg-slate-900/40 border border-slate-800/80 rounded-2xl text-center text-slate-500 text-sm">
+                <div className="p-8 bg-white border border-slate-200 rounded-2xl text-center text-slate-500 text-xs">
                   No business card associated. Please contact the administrator.
                 </div>
               )}
 
               {/* Scoped Owner Usage Statistics Panel */}
-              <div className="p-6 bg-slate-900/40 border border-slate-800/80 rounded-2xl space-y-6">
+              <div className="p-6 bg-white border border-slate-200 rounded-2xl space-y-6">
                 <div>
-                  <h3 className="text-lg font-bold text-slate-200">Uploader Usage Statistics</h3>
-                  <p className="text-xs text-slate-400 mt-0.5">Track your resource allocation and limits configured by the Super Admin.</p>
+                  <h3 className="text-base font-extrabold text-slate-900">Uploader Usage Statistics</h3>
+                  <p className="text-xs text-slate-550 mt-0.5">Track your resource allocation and limits configured by the Super Admin.</p>
                 </div>
                 
                 <div className="space-y-4">
                   {/* Services counter bar */}
                   <div className="space-y-2">
-                    <div className="flex justify-between items-center text-xs font-semibold">
-                      <span className="text-slate-300">Services Catalog Space</span>
-                      <span className="text-indigo-400 bg-indigo-950/30 px-2 py-0.5 rounded-full border border-indigo-900/30">
+                    <div className="flex justify-between items-center text-xs font-bold">
+                      <span className="text-slate-650">Services Catalog Space</span>
+                      <span className="text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-100 text-[10px]">
                         {servicesUsage[ownerCard?.id || ''] || 0} / {PORTAL_LIMITS.MAX_SERVICES} Used
                       </span>
                     </div>
-                    <div className="w-full bg-slate-950 h-2.5 rounded-full overflow-hidden border border-slate-850">
+                    <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden border border-slate-200">
                       <div 
-                        className="bg-gradient-to-r from-indigo-500 to-purple-500 h-full rounded-full transition-all duration-500"
+                        className="bg-indigo-600 h-full rounded-full transition-all duration-500"
                         style={{ width: `${Math.min(100, ((servicesUsage[ownerCard?.id || ''] || 0) / PORTAL_LIMITS.MAX_SERVICES) * 100)}%` }}
                       />
                     </div>
@@ -386,38 +392,19 @@ export default function AdminDashboard() {
 
                   {/* Gallery counter bar */}
                   <div className="space-y-2">
-                    <div className="flex justify-between items-center text-xs font-semibold">
-                      <span className="text-slate-300">Gallery Media Space</span>
-                      <span className="text-purple-400 bg-purple-950/30 px-2 py-0.5 rounded-full border border-purple-900/30">
+                    <div className="flex justify-between items-center text-xs font-bold">
+                      <span className="text-slate-650">Gallery Media Space</span>
+                      <span className="text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded-full border border-purple-100 text-[10px]">
                         {galleryUsage[ownerCard?.id || ''] || 0} / {PORTAL_LIMITS.MAX_GALLERY_IMAGES} Used
                       </span>
                     </div>
-                    <div className="w-full bg-slate-950 h-2.5 rounded-full overflow-hidden border border-slate-850">
+                    <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden border border-slate-200">
                       <div 
-                        className="bg-gradient-to-r from-purple-500 to-pink-500 h-full rounded-full transition-all duration-500"
+                        className="bg-purple-600 h-full rounded-full transition-all duration-500"
                         style={{ width: `${Math.min(100, ((galleryUsage[ownerCard?.id || ''] || 0) / PORTAL_LIMITS.MAX_GALLERY_IMAGES) * 100)}%` }}
                       />
                     </div>
                   </div>
-                </div>
-              </div>
-
-              {/* Account Settings metadata */}
-              <div className="p-5 bg-slate-900/40 border border-slate-800/80 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-3.5 bg-indigo-950/40 border border-indigo-900/20 text-indigo-400 rounded-xl">
-                    <UserCheck className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="block text-xs text-slate-500 uppercase font-bold tracking-wider">Account Credentials</span>
-                    <span className="block text-sm font-semibold text-slate-300 mt-0.5">{user?.email}</span>
-                  </div>
-                </div>
-                <div className="text-left md:text-right">
-                  <span className="block text-xs text-slate-500 uppercase font-bold tracking-wider">Status Banner</span>
-                  <span className="inline-block px-3 py-1 mt-1 bg-emerald-950/40 border border-emerald-900/30 text-emerald-400 text-xs font-extrabold uppercase rounded-full">
-                    Active Account
-                  </span>
                 </div>
               </div>
             </>
@@ -428,42 +415,42 @@ export default function AdminDashboard() {
             <>
               {/* Directory search filters */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <h2 className="text-xl font-bold tracking-tight text-slate-200 pl-1">
+                <h2 className="text-lg font-extrabold tracking-tight text-slate-900 pl-0.5">
                   Manage Business Accounts
                 </h2>
                 
                 <div className="flex items-center gap-3 w-full sm:w-auto">
                   {/* Search */}
                   <div className="relative flex items-center flex-1 sm:w-60">
-                    <Search className="absolute left-3 w-4 h-4 text-slate-500" />
+                    <Search className="absolute left-3 w-4 h-4 text-slate-400" />
                     <input
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search accounts..."
-                      className="w-full pl-9 pr-3 py-2 bg-slate-900/40 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-200 placeholder:text-slate-500"
+                      className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-800 placeholder:text-slate-400"
                     />
                   </div>
                   {/* Status filter */}
                   <div className="relative flex items-center w-28">
-                    <Filter className="absolute left-3 w-4 h-4 text-slate-500 pointer-events-none" />
+                    <Filter className="absolute left-3 w-4 h-4 text-slate-400 pointer-events-none" />
                     <select
                       value={statusFilter}
                       onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setStatusFilter(e.target.value as 'all' | 'active' | 'inactive')}
-                      className="w-full pl-8 pr-2 py-2 bg-slate-900/40 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-300 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[size:0.55rem_auto] bg-[position:right_0.75rem_center] bg-no-repeat"
+                      className="w-full pl-8 pr-2 py-2 bg-white border border-slate-200 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-700 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[size:0.55rem_auto] bg-[position:right_0.75rem_center] bg-no-repeat"
                     >
-                      <option value="all" className="bg-slate-950">All Status</option>
-                      <option value="active" className="bg-slate-950">Active</option>
-                      <option value="inactive" className="bg-slate-950">Inactive</option>
+                      <option value="all">All Status</option>
+                      <option value="active">Active</option>
+                      <option value="inactive">Inactive</option>
                     </select>
                   </div>
                 </div>
               </div>
 
               {/* Cards Listing Directory */}
-              <div className="bg-slate-900/40 border border-slate-800/80 rounded-2xl overflow-hidden divide-y divide-slate-850 shadow-md">
+              <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden divide-y divide-slate-100 shadow-sm">
                 {filteredCards.length === 0 ? (
-                  <div className="p-12 text-center text-slate-500 text-sm">
+                  <div className="p-12 text-center text-slate-550 text-xs">
                     No business accounts matching query or status filter.
                   </div>
                 ) : (
@@ -477,7 +464,7 @@ export default function AdminDashboard() {
                     return (
                       <div 
                         key={card.id}
-                        className="p-5 space-y-4 hover:bg-slate-850/20 transition-all group"
+                        className="p-5 space-y-4 hover:bg-slate-50/50 transition-colors group"
                       >
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex items-center gap-4 min-w-0">
@@ -485,48 +472,47 @@ export default function AdminDashboard() {
                               <img 
                                 src={card.profileImage} 
                                 alt={card.ownerName}
-                                className="w-12 h-12 rounded-full object-cover border border-slate-800 flex-shrink-0"
+                                className="w-12 h-12 rounded-full object-cover border border-slate-200 flex-shrink-0 bg-slate-100"
                               />
                             ) : (
-                              <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center font-bold text-lg text-indigo-400 flex-shrink-0">
+                              <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center font-bold text-lg text-indigo-650 flex-shrink-0">
                                 {card.ownerName.charAt(0)}
                               </div>
                             )}
-                            <div className="min-w-0">
-                              <span className="block text-sm font-bold text-slate-200 truncate group-hover:text-indigo-400 transition-colors">
+                            <div className="min-w-0 text-left">
+                              <span className="block text-sm font-bold text-slate-900 truncate group-hover:text-indigo-650 transition-colors">
                                 {card.businessName}
                               </span>
-                              <span className="block text-xs text-slate-400 truncate">
+                              <span className="block text-xs text-slate-500 truncate font-semibold mt-0.5">
                                 {card.ownerName} • {card.category}
                               </span>
-                              <span className="block text-[10px] text-slate-500 truncate mt-0.5">
+                              <span className="block text-[10px] text-slate-450 truncate mt-0.5">
                                 Login: {card.ownerEmail || card.email}
                               </span>
                             </div>
                           </div>
 
                           <div className="flex items-center gap-2">
-                            {/* Status indicator badge */}
-                            <span className={`px-2.5 py-0.5 text-[10px] font-extrabold uppercase rounded-full border ${
+                            <span className={`px-2.5 py-0.5 text-[9px] font-black uppercase rounded-full border ${
                               isActiveCard 
-                                ? 'bg-emerald-950/40 border-emerald-900/30 text-emerald-400' 
-                                : 'bg-red-950/40 border-red-900/30 text-red-400'
+                                ? 'bg-emerald-50 border-emerald-100 text-emerald-700' 
+                                : 'bg-rose-50 border-rose-100 text-rose-700'
                             }`}>
                               {cardStatus}
                             </span>
                           </div>
                         </div>
 
-                        {/* Usage Counters gauges */}
-                        <div className="grid grid-cols-2 gap-4 bg-slate-950/40 border border-slate-850 rounded-xl p-3.5 text-xs text-slate-400">
+                        {/* Usage Counters Gauges */}
+                        <div className="grid grid-cols-2 gap-4 bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs text-slate-500 font-semibold">
                           <div>
                             <div className="flex justify-between items-center mb-1">
                               <span>Services Used</span>
-                              <span className="font-semibold text-slate-300">{sCount} / {PORTAL_LIMITS.MAX_SERVICES}</span>
+                              <span className="font-bold text-slate-800">{sCount} / {PORTAL_LIMITS.MAX_SERVICES}</span>
                             </div>
-                            <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-800">
+                            <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
                               <div 
-                                className="bg-gradient-to-r from-indigo-500 to-purple-500 h-full"
+                                className="bg-indigo-650 h-full"
                                 style={{ width: `${(sCount / PORTAL_LIMITS.MAX_SERVICES) * 100}%` }}
                               />
                             </div>
@@ -535,11 +521,11 @@ export default function AdminDashboard() {
                           <div>
                             <div className="flex justify-between items-center mb-1">
                               <span>Gallery Images</span>
-                              <span className="font-semibold text-slate-300">{gCount} / {PORTAL_LIMITS.MAX_GALLERY_IMAGES}</span>
+                              <span className="font-bold text-slate-800">{gCount} / {PORTAL_LIMITS.MAX_GALLERY_IMAGES}</span>
                             </div>
-                            <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-800">
+                            <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
                               <div 
-                                className="bg-gradient-to-r from-purple-500 to-pink-500 h-full"
+                                className="bg-purple-650 h-full"
                                 style={{ width: `${(gCount / PORTAL_LIMITS.MAX_GALLERY_IMAGES) * 100}%` }}
                               />
                             </div>
@@ -547,36 +533,34 @@ export default function AdminDashboard() {
                         </div>
 
                         {/* Super Admin Actions Panel */}
-                        <div className="flex items-center justify-between border-t border-slate-850/60 pt-3">
+                        <div className="flex items-center justify-between border-t border-slate-100 pt-3">
                           <div className="flex gap-2">
-                            {/* Toggle status switch */}
                             <button
                               onClick={() => handleToggleStatus(card.id, cardStatus)}
                               className={`flex items-center gap-1.5 px-3 py-1.5 border rounded-lg text-xs font-bold transition-all ${
                                 isActiveCard 
-                                  ? 'bg-red-950/20 border-red-900/30 hover:border-red-650 text-red-400' 
-                                  : 'bg-emerald-950/20 border-emerald-900/30 hover:border-emerald-650 text-emerald-400'
+                                  ? 'bg-rose-50 border-rose-100 hover:border-rose-300 text-rose-700' 
+                                  : 'bg-emerald-50 border-emerald-100 hover:border-emerald-300 text-emerald-700'
                               }`}
                             >
                               {isActiveCard ? (
                                 <>
-                                  <ToggleRight className="w-4.5 h-4.5 text-red-400" />
+                                  <ToggleRight className="w-4.5 h-4.5 text-rose-600" />
                                   Deactivate
                                 </>
                               ) : (
                                 <>
-                                  <ToggleLeft className="w-4.5 h-4.5 text-emerald-400" />
+                                  <ToggleLeft className="w-4.5 h-4.5 text-emerald-600" />
                                   Activate
                                 </>
                               )}
                             </button>
                             
-                            {/* Reset password button */}
                             <button
                               onClick={() => setResettingCardId(card.id)}
-                              className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-950 border border-slate-850 hover:border-slate-700 text-slate-300 rounded-lg text-xs font-bold transition-all"
+                              className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 border border-slate-200 hover:border-slate-350 text-slate-700 rounded-lg text-xs font-bold transition-colors"
                             >
-                              <Key className="w-4 h-4 text-indigo-400" />
+                              <Key className="w-4 h-4 text-indigo-650" />
                               Reset Password
                             </button>
                           </div>
@@ -585,7 +569,7 @@ export default function AdminDashboard() {
                             <Link
                               href={`/${card.slug}`}
                               target="_blank"
-                              className="p-1.5 bg-slate-950 border border-slate-850 hover:border-slate-750 text-slate-400 hover:text-white rounded-lg transition-all"
+                              className="p-1.5 bg-slate-50 border border-slate-200 hover:border-slate-350 text-slate-500 hover:text-slate-800 rounded-lg transition-all"
                               title="Launch Card"
                             >
                               <ExternalLink className="w-4 h-4" />
@@ -593,7 +577,7 @@ export default function AdminDashboard() {
                             
                             <Link
                               href={`/admin/cards/edit/${card.id}`}
-                              className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-bold transition-all"
+                              className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-750 text-white rounded-lg text-xs font-black transition-colors"
                             >
                               Configure
                             </Link>
@@ -609,49 +593,48 @@ export default function AdminDashboard() {
           )}
         </div>
 
-        {/* Right Column: Scoped leads & enquiries — only for business owners */}
-        {isOwner && (
+        {/* Right Column: Scoped leads & inquiries — only for business owners */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold tracking-tight text-slate-200">
-              Recent Leads
+            <h2 className="text-lg font-extrabold tracking-tight text-slate-900">
+              {isOwner ? 'Recent Leads' : 'Inquiries Status'}
             </h2>
             <Link 
               href="/admin/leads" 
-              className="text-xs text-indigo-400 hover:text-indigo-300 font-bold flex items-center gap-1"
+              className="text-xs text-indigo-605 hover:text-indigo-750 font-bold flex items-center gap-0.5"
             >
               Leads Hub
               <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
 
-          <div className="bg-slate-900/40 border border-slate-800/80 rounded-2xl overflow-hidden divide-y divide-slate-850 shadow-md">
+          <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden divide-y divide-slate-100 shadow-sm">
             {leads.length === 0 ? (
-              <div className="p-8 text-center text-slate-500 text-sm">
+              <div className="p-8 text-center text-slate-500 text-xs font-medium">
                 No inquiries or leads received yet.
               </div>
             ) : (
               leads.slice(0, 4).map((lead) => {
                 const business = cards.find(c => c.id === lead.businessId);
                 return (
-                  <div key={lead.id} className="p-4 space-y-2 hover:bg-slate-850/20 transition-all">
+                  <div key={lead.id} className="p-4 space-y-2 hover:bg-slate-50/50 transition-colors">
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0 text-left">
-                        <span className="block text-xs font-bold text-indigo-400 uppercase tracking-wide truncate">
+                        <span className="block text-[10px] font-black text-indigo-755 uppercase tracking-wide truncate">
                           {business?.businessName || 'My Card'}
                         </span>
-                        <span className="block text-sm font-bold text-slate-200 truncate mt-0.5">
+                        <span className="block text-sm font-bold text-slate-800 truncate mt-0.5">
                           {lead.name}
                         </span>
-                        <span className="block text-xs text-slate-400 truncate mt-0.5">
+                        <span className="block text-xs text-slate-500 truncate mt-0.5 font-medium">
                           {lead.mobile} • {lead.email}
                         </span>
                       </div>
-                      <span className="text-[10px] text-slate-500 font-medium whitespace-nowrap bg-slate-950/60 px-2 py-0.5 rounded-full">
+                      <span className="text-[10px] text-slate-500 font-bold whitespace-nowrap bg-slate-50 border border-slate-200 px-2 py-0.5 rounded-full">
                         {new Date(lead.createdAt).toLocaleDateString(undefined, {month: 'short', day: 'numeric'})}
                       </span>
                     </div>
-                    <div className="p-2.5 bg-slate-950/50 border border-slate-850 rounded-xl text-xs text-slate-350 italic text-left">
+                    <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-650 italic text-left">
                       &ldquo;{lead.message}&rdquo;
                     </div>
                   </div>
@@ -660,50 +643,198 @@ export default function AdminDashboard() {
             )}
           </div>
         </div>
-        )}
+
+      </div>
+
+      {/* ==================================================== */}
+      {/* 🚀 ADVANCED DUMMY WIDGETS split panel */}
+      {/* ==================================================== */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        {/* Left Widget: Recent events log + system status */}
+        <div className="lg:col-span-2 space-y-6">
+          <h2 className="text-lg font-extrabold tracking-tight text-slate-900 pl-0.5">
+            System Operations Panel
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            
+            {/* Recent Activity Log */}
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+              <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
+                <Activity className="w-5 h-5 text-indigo-650" />
+                <h3 className="text-sm font-bold text-slate-950">Recent System Activity</h3>
+              </div>
+
+              <div className="space-y-4 text-left">
+                <div className="relative pl-5 border-l-2 border-slate-200 space-y-1">
+                  <span className="absolute -left-1.5 top-1.5 w-2.5 h-2.5 bg-indigo-600 rounded-full" />
+                  <span className="block text-[10px] text-slate-450 font-bold">10:15 AM — Today</span>
+                  <p className="text-xs text-slate-700 font-semibold leading-relaxed">
+                    Lead record submitted for <span className="text-indigo-600">Mahalakshmi Services</span> by Karthik Rao.
+                  </p>
+                </div>
+                
+                <div className="relative pl-5 border-l-2 border-slate-200 space-y-1">
+                  <span className="absolute -left-1.5 top-1.5 w-2.5 h-2.5 bg-indigo-600 rounded-full" />
+                  <span className="block text-[10px] text-slate-450 font-bold">09:30 AM — Today</span>
+                  <p className="text-xs text-slate-700 font-semibold leading-relaxed">
+                    <span className="text-purple-600">Apex Digital Studio</span> visual portfolio images updated by owner.
+                  </p>
+                </div>
+
+                <div className="relative pl-5 space-y-1">
+                  <span className="absolute -left-1 top-1.5 w-2 h-2 bg-slate-350 rounded-full" />
+                  <span className="block text-[10px] text-slate-450 font-bold">08:45 AM — Yesterday</span>
+                  <p className="text-xs text-slate-650 leading-relaxed">
+                    Alternate mobile number successfully changed on <span className="font-semibold text-slate-750">Elite Real Estate</span>.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Integrations & APIs status */}
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+              <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
+                <Database className="w-5 h-5 text-indigo-650" />
+                <h3 className="text-sm font-bold text-slate-950">Integration Systems</h3>
+              </div>
+
+              <div className="space-y-3.5 text-xs text-slate-650 font-semibold">
+                <div className="flex items-center justify-between p-2 bg-slate-50 border border-slate-150 rounded-xl">
+                  <span className="flex items-center gap-1.5 text-slate-800">
+                    <CloudLightning className="w-4 h-4 text-emerald-600" />
+                    Firebase Firestore
+                  </span>
+                  <span className="px-2 py-0.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-[9px] font-black uppercase rounded-full">
+                    Active
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between p-2 bg-slate-50 border border-slate-150 rounded-xl">
+                  <span className="flex items-center gap-1.5 text-slate-800">
+                    <UserCheck className="w-4 h-4 text-emerald-600" />
+                    Firebase Auth
+                  </span>
+                  <span className="px-2 py-0.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-[9px] font-black uppercase rounded-full">
+                    Active
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between p-2 bg-slate-50 border border-slate-150 rounded-xl">
+                  <span className="flex items-center gap-1.5 text-slate-800">
+                    <Share2 className="w-4 h-4 text-emerald-600" />
+                    ImgBB API Proxy
+                  </span>
+                  <span className="px-2 py-0.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-[9px] font-black uppercase rounded-full">
+                    Online
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Right Widget: Device distribution stats */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-extrabold tracking-tight text-slate-900">
+            Access Ratio
+          </h2>
+
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-5">
+            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block border-b border-slate-100 pb-2">
+              Device Distribution
+            </span>
+
+            <div className="space-y-4 font-semibold text-xs text-slate-650">
+              {/* Mobile phone stats */}
+              <div className="space-y-1.5">
+                <div className="flex justify-between items-center">
+                  <span className="flex items-center gap-1 text-slate-800">
+                    <Smartphone className="w-4 h-4 text-indigo-650" />
+                    Smartphones
+                  </span>
+                  <span className="font-bold text-slate-900">64%</span>
+                </div>
+                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
+                  <div className="bg-indigo-600 h-full rounded-full" style={{ width: '64%' }} />
+                </div>
+              </div>
+
+              {/* Desktop laptop stats */}
+              <div className="space-y-1.5">
+                <div className="flex justify-between items-center">
+                  <span className="flex items-center gap-1 text-slate-800">
+                    <Laptop className="w-4 h-4 text-indigo-650" />
+                    Desktops & Laptops
+                  </span>
+                  <span className="font-bold text-slate-900">24%</span>
+                </div>
+                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
+                  <div className="bg-indigo-600 h-full rounded-full" style={{ width: '24%' }} />
+                </div>
+              </div>
+
+              {/* Tablet stats */}
+              <div className="space-y-1.5">
+                <div className="flex justify-between items-center">
+                  <span className="flex items-center gap-1 text-slate-800">
+                    <Tablet className="w-4 h-4 text-indigo-650" />
+                    Tablets
+                  </span>
+                  <span className="font-bold text-slate-900">12%</span>
+                </div>
+                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
+                  <div className="bg-indigo-600 h-full rounded-full" style={{ width: '12%' }} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
 
       {/* Password Reset Modal Overlay - visible only for Super Admin */}
       {resettingCardId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/75 backdrop-blur-sm transition-opacity">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-850 pb-3">
-              <span className="text-sm font-bold text-slate-200">Reset Credentials</span>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm transition-opacity">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-150 pb-3">
+              <span className="text-sm font-bold text-slate-900">Reset Credentials</span>
               <button 
                 onClick={() => setResettingCardId(null)}
-                className="p-1 text-slate-500 hover:text-slate-300 rounded-lg"
+                className="p-1 text-slate-400 hover:text-slate-650 hover:bg-slate-100 rounded-lg transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {resetSuccessMsg ? (
-              <div className="p-4 bg-emerald-950/40 border border-emerald-900/30 rounded-xl text-emerald-300 text-xs font-semibold text-center flex flex-col items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+              <div className="p-4 bg-emerald-50 border border-emerald-250 rounded-xl text-emerald-800 text-xs font-bold text-center flex flex-col items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
                 {resetSuccessMsg}
               </div>
             ) : (
               <form onSubmit={handleResetPassword} className="space-y-4">
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-xs text-slate-500 font-medium leading-relaxed">
                   Provide a new secret password for this business owner. They will use this password to sign in to their portal.
                 </p>
                 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">New Secret Password</label>
+                  <label className="text-[9px] font-bold text-slate-500 uppercase tracking-widest pl-1">New Secret Password</label>
                   <input
                     type="password"
                     required
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     placeholder="Enter new password..."
-                    className="w-full px-4 py-2.5 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-200"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 focus:bg-white focus:border-indigo-650 focus:outline-none rounded-xl text-xs text-slate-800"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-indigo-950/20"
+                  className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-755 text-white rounded-xl text-xs font-black shadow-sm transition-colors"
                 >
                   Configure New Password
                 </button>

@@ -24,8 +24,8 @@ export default function TemplatesShowcasePage() {
         'Elegant Serif typography for titles, crisp sans-serif content',
         'Optimized for rapid one-click call interactions'
       ],
-      color: 'bg-indigo-600/10 border-indigo-500/20 text-indigo-400',
-      badgeColor: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
+      color: 'bg-indigo-50 border-indigo-150 text-indigo-700',
+      badgeColor: 'bg-indigo-50 text-indigo-700 border-indigo-100'
     },
     {
       id: 'template2',
@@ -37,8 +37,8 @@ export default function TemplatesShowcasePage() {
         'Sleek glassmorphic service grids and chips accents',
         'Dynamic social media top-bar navigation integrations'
       ],
-      color: 'bg-purple-600/10 border-purple-500/20 text-purple-400',
-      badgeColor: 'bg-purple-500/10 text-purple-400 border-purple-500/20'
+      color: 'bg-purple-50 border-purple-150 text-purple-700',
+      badgeColor: 'bg-purple-50 text-purple-700 border-purple-100'
     },
     {
       id: 'template3',
@@ -50,8 +50,8 @@ export default function TemplatesShowcasePage() {
         'Large, image-focused masonry project portfolio showcases',
         'Clean grayscale image transitions and high-contrast typography'
       ],
-      color: 'bg-slate-300/30 border-slate-500/20 text-slate-200',
-      badgeColor: 'bg-slate-800/80 text-slate-300 border-slate-700/50'
+      color: 'bg-slate-50 border-slate-200 text-slate-700',
+      badgeColor: 'bg-slate-50 text-slate-700 border-slate-200'
     },
     {
       id: 'template4',
@@ -63,8 +63,8 @@ export default function TemplatesShowcasePage() {
         'Floating bottom sticky Call & WhatsApp actions for quick chat',
         'Promotional visual slider showcase grids'
       ],
-      color: 'bg-rose-650/10 border-rose-500/20 text-rose-455',
-      badgeColor: 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+      color: 'bg-rose-50 border-rose-150 text-rose-700',
+      badgeColor: 'bg-rose-50 text-rose-700 border-rose-100'
     },
     {
       id: 'template5',
@@ -76,8 +76,8 @@ export default function TemplatesShowcasePage() {
         'Cormorant Garamond / Playfair Display ultra-premium serif font arrays',
         'Refined acclamations and testimonials luxury quotes blocks'
       ],
-      color: 'bg-amber-650/10 border-amber-500/20 text-amber-400',
-      badgeColor: 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+      color: 'bg-amber-50 border-amber-150 text-amber-700',
+      badgeColor: 'bg-amber-50 text-amber-750 border-amber-100'
     }
   ];
 
@@ -85,11 +85,11 @@ export default function TemplatesShowcasePage() {
     <div className="space-y-8 animate-fadeIn">
       {/* Page Header */}
       <div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-white flex items-center gap-3">
-          <Layers className="w-8 h-8 text-indigo-400 animate-pulse" />
+        <h1 className="text-3xl font-black tracking-tight text-slate-900 flex items-center gap-3">
+          <Layers className="w-8 h-8 text-indigo-600" />
           Template Showcase Catalog
         </h1>
-        <p className="text-slate-400 text-sm mt-1">
+        <p className="text-slate-500 text-sm mt-1 font-medium">
           Browse the 5 custom niche templates designed to wow visitors instantly.
         </p>
       </div>
@@ -99,19 +99,16 @@ export default function TemplatesShowcasePage() {
         {templates.map((tpl, idx) => (
           <div 
             key={tpl.id}
-            className="bg-slate-900/40 border border-slate-800 rounded-3xl p-6 md:p-8 flex flex-col justify-between hover:border-slate-700/60 transition-all relative overflow-hidden group shadow-lg"
+            className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 flex flex-col justify-between hover:border-slate-355 transition-all relative overflow-hidden group shadow-sm"
           >
-            {/* Index Glow Tag */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none group-hover:bg-indigo-500/10 transition-all" />
-            
             <div className="space-y-6">
               {/* Header and Badge */}
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <span className={`px-3 py-1 rounded-full text-[10px] font-extrabold uppercase border ${tpl.badgeColor}`}>
+                <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase border ${tpl.badgeColor}`}>
                   {tpl.id.replace('template', 'Template ')}
                 </span>
                 
-                <span className="text-xs text-slate-500 font-semibold italic flex items-center gap-1">
+                <span className="text-xs text-slate-450 font-bold flex items-center gap-1">
                   <Layout className="w-3.5 h-3.5" />
                   Niche Optimized
                 </span>
@@ -119,28 +116,28 @@ export default function TemplatesShowcasePage() {
 
               {/* Title & Description */}
               <div className="space-y-2">
-                <h3 className="text-xl font-bold tracking-tight text-white group-hover:text-indigo-400 transition-colors">
+                <h3 className="text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-indigo-650 transition-colors">
                   {tpl.name}
                 </h3>
                 
-                <div className="flex items-start gap-2 text-xs text-slate-350 bg-slate-950/40 p-3 rounded-xl border border-slate-850">
-                  <Briefcase className="w-4 h-4 text-indigo-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-semibold text-slate-400 block mb-0.5 uppercase tracking-wide text-[10px]">Best Suited Niche:</span>
+                <div className="flex items-start gap-2 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                  <Briefcase className="w-4 h-4 text-indigo-600 flex-shrink-0 mt-0.5" />
+                  <div className="text-left">
+                    <span className="font-bold text-slate-450 block mb-0.5 uppercase tracking-wide text-[9px]">Best Suited Niche:</span>
                     {tpl.suitability}
                   </div>
                 </div>
               </div>
 
               {/* Features checklist */}
-              <div className="space-y-3.5 border-t border-slate-850 pt-5">
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block pl-1">
+              <div className="space-y-3.5 border-t border-slate-100 pt-5">
+                <span className="text-[9px] font-black text-slate-450 uppercase tracking-widest block pl-1 text-left">
                   UX Architecture Highlights
                 </span>
                 <ul className="space-y-2.5">
                   {tpl.features.map((feature, fIdx) => (
-                    <li key={fIdx} className="flex items-start gap-2.5 text-xs text-slate-400 leading-relaxed">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                    <li key={fIdx} className="flex items-start gap-2.5 text-xs text-slate-600 font-semibold leading-relaxed text-left">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
                       {feature}
                     </li>
                   ))}
@@ -149,12 +146,12 @@ export default function TemplatesShowcasePage() {
             </div>
 
             {/* Bottom quick details */}
-            <div className="mt-8 pt-4 border-t border-slate-850 flex items-center justify-between text-xs font-semibold text-slate-500">
+            <div className="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-500">
               <span className="flex items-center gap-1">
                 <Zap className="w-3.5 h-3.5 text-amber-500" />
                 Mobile-first responsive
               </span>
-              <span className="text-indigo-400 font-bold flex items-center gap-0.5">
+              <span className="text-indigo-600 font-black flex items-center gap-0.5">
                 Use in form
                 <ChevronRight className="w-4 h-4" />
               </span>

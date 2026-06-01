@@ -75,16 +75,16 @@ export default function CardsListPage() {
       {/* Header and Top Button */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-white">
+          <h1 className="text-3xl font-black tracking-tight text-slate-900">
             Manage Business Cards
           </h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-slate-500 text-sm mt-1 font-medium">
             Create, edit, and audit active digital identity cards.
           </p>
         </div>
         <Link
           href="/admin/cards/new"
-          className="px-5 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-950/40 transition-all flex items-center justify-center gap-2 hover:scale-[1.02]"
+          className="px-5 py-3 bg-indigo-600 hover:bg-indigo-755 text-white rounded-xl text-xs font-black shadow-sm transition-all flex items-center justify-center gap-2 hover:scale-[1.01]"
         >
           <PlusCircle className="w-4.5 h-4.5" />
           Create Business Card
@@ -93,19 +93,19 @@ export default function CardsListPage() {
 
       {/* Live Search Bar */}
       <div className="relative flex items-center">
-        <Search className="absolute left-4 w-5 h-5 text-slate-500" />
+        <Search className="absolute left-4 w-4 h-4 text-slate-400" />
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search by business name, owner name, category, or mobile number..."
-          className="w-full pl-12 pr-4 py-3.5 bg-slate-900/40 border border-slate-800 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200 placeholder:text-slate-555 shadow-inner"
+          className="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 placeholder:text-slate-400 shadow-sm"
         />
       </div>
 
       {/* Grid of Business Cards */}
       {filteredCards.length === 0 ? (
-        <div className="p-12 text-center bg-slate-900/20 border border-slate-850 rounded-2xl text-slate-500 text-sm">
+        <div className="p-12 text-center bg-white border border-slate-200 rounded-2xl text-slate-500 text-xs font-medium">
           {searchQuery ? 'No matching business cards found for your search query.' : 'No business cards registered yet.'}
         </div>
       ) : (
@@ -113,22 +113,22 @@ export default function CardsListPage() {
           {filteredCards.map((card) => (
             <div 
               key={card.id}
-              className="group relative bg-slate-900/40 backdrop-blur-md border border-slate-800/80 rounded-2xl overflow-hidden shadow-lg hover:border-slate-700/60 transition-all flex flex-col justify-between"
+              className="group relative bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:border-slate-350 transition-all flex flex-col justify-between"
             >
               {/* Cover Image banner placeholder/actual */}
-              <div className="h-32 w-full overflow-hidden relative border-b border-slate-800/50 bg-slate-950">
+              <div className="h-32 w-full overflow-hidden relative border-b border-slate-100 bg-slate-50">
                 {card.coverImage ? (
                   <img 
                     src={card.coverImage} 
                     alt={card.businessName}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-101 transition-transform duration-500"
                   />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-r from-indigo-950 to-purple-950" />
+                  <div className="w-full h-full bg-slate-100" />
                 )}
                 
                 {/* Template badge overlay */}
-                <div className="absolute top-3 right-3 px-3 py-1 bg-slate-900/90 backdrop-blur-sm border border-slate-800 rounded-full text-[10px] text-indigo-400 font-bold uppercase tracking-wider">
+                <div className="absolute top-3 right-3 px-3 py-1 bg-indigo-50 border border-indigo-100 rounded-full text-[10px] text-indigo-700 font-black uppercase tracking-wider">
                   {card.templateId.replace('template', 'Template ')}
                 </div>
               </div>
@@ -139,10 +139,10 @@ export default function CardsListPage() {
                   <img 
                     src={card.profileImage} 
                     alt={card.ownerName}
-                    className="w-16 h-16 rounded-full object-cover border-2 border-slate-900 shadow-md bg-slate-850"
+                    className="w-16 h-16 rounded-full object-cover border-2 border-white shadow bg-white p-0.5"
                   />
                 ) : (
-                  <div className="w-16 h-16 bg-slate-850 rounded-full flex items-center justify-center font-bold text-xl text-indigo-400 border-2 border-slate-900 shadow-md">
+                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center font-bold text-xl text-indigo-650 border-2 border-white shadow">
                     {card.ownerName.charAt(0)}
                   </div>
                 )}
@@ -151,7 +151,7 @@ export default function CardsListPage() {
                 <Link
                   href={`/${card.slug}`}
                   target="_blank"
-                  className="p-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-all shadow-md flex items-center gap-1.5 text-xs font-bold"
+                  className="px-3 py-1.5 bg-slate-50 border border-slate-200 hover:border-slate-350 text-slate-700 hover:text-slate-900 rounded-lg transition-all text-xs font-bold flex items-center gap-1.5"
                   title="View Public Page"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -162,48 +162,48 @@ export default function CardsListPage() {
               {/* Business details */}
               <div className="p-6 space-y-4 flex-1">
                 <div>
-                  <h3 className="text-lg font-bold text-slate-100 truncate group-hover:text-indigo-400 transition-colors">
+                  <h3 className="text-sm font-bold text-slate-950 truncate group-hover:text-indigo-650 transition-colors">
                     {card.businessName}
                   </h3>
-                  <span className="text-xs text-indigo-400 font-semibold block mt-0.5 truncate uppercase tracking-wide">
+                  <span className="text-[10px] text-indigo-700 font-bold block mt-0.5 truncate uppercase tracking-wider">
                     {card.category}
                   </span>
                 </div>
 
-                <div className="space-y-2 border-t border-slate-850 pt-4 text-xs text-slate-400">
+                <div className="space-y-2 border-t border-slate-100 pt-4 text-xs text-slate-600 font-medium">
                   <div className="flex items-center gap-2">
-                    <User className="w-4 h-4 text-slate-500" />
-                    <span className="font-medium truncate">{card.ownerName} ({card.designation})</span>
+                    <User className="w-4 h-4 text-slate-400" />
+                    <span className="truncate">{card.ownerName} ({card.designation})</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-slate-500" />
+                    <Phone className="w-4 h-4 text-slate-400" />
                     <span>{card.mobile}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <LayoutGrid className="w-4 h-4 text-slate-500" />
+                    <LayoutGrid className="w-4 h-4 text-slate-400" />
                     <span className="truncate">/{card.slug}</span>
                   </div>
                 </div>
               </div>
 
               {/* Control Action Buttons */}
-              <div className="px-6 py-4 bg-slate-950/40 border-t border-slate-850 flex items-center justify-between gap-4">
+              <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between gap-4">
                 {deleteConfirmId === card.id ? (
-                  <div className="w-full flex items-center justify-between bg-red-950/20 border border-red-900/30 p-2 rounded-xl gap-2 text-xs">
-                    <span className="text-red-400 font-semibold flex items-center gap-1">
+                  <div className="w-full flex items-center justify-between bg-rose-50 border border-rose-100 p-2 rounded-xl gap-2 text-xs">
+                    <span className="text-rose-700 font-bold flex items-center gap-1">
                       <AlertTriangle className="w-4 h-4 flex-shrink-0" />
                       Delete?
                     </span>
                     <div className="flex items-center gap-1.5">
                       <button
                         onClick={() => handleDelete(card.id)}
-                        className="px-2.5 py-1 bg-red-600 hover:bg-red-500 text-white rounded-lg font-bold"
+                        className="px-2.5 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold text-[10px]"
                       >
                         Confirm
                       </button>
                       <button
                         onClick={() => setDeleteConfirmId(null)}
-                        className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold"
+                        className="px-2.5 py-1 bg-slate-200 hover:bg-slate-350 text-slate-700 rounded-lg font-bold text-[10px]"
                       >
                         Cancel
                       </button>
@@ -213,14 +213,14 @@ export default function CardsListPage() {
                   <>
                     <button
                       onClick={() => setDeleteConfirmId(card.id)}
-                      className="p-2 text-slate-500 hover:text-red-400 hover:bg-red-950/20 rounded-lg transition-colors flex items-center gap-1.5 text-xs font-semibold"
+                      className="p-2 text-slate-500 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors flex items-center gap-1.5 text-xs font-semibold"
                     >
                       <Trash2 className="w-4 h-4" />
                       Delete
                     </button>
                     <Link
                       href={`/admin/cards/edit/${card.id}`}
-                      className="py-2 px-4 bg-indigo-600/10 hover:bg-indigo-600 border border-indigo-500/20 hover:border-indigo-500 text-indigo-400 hover:text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5"
+                      className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-755 text-white rounded-lg text-xs font-black transition-colors flex items-center gap-1.5"
                     >
                       <Edit3 className="w-4 h-4" />
                       Edit VCard

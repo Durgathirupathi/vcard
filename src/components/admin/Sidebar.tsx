@@ -64,18 +64,18 @@ export default function Sidebar({ onMobileToggle, isMobileOpen = false }: Sideba
   }
 
   const sidebarContent = (
-    <div className="flex flex-col h-full bg-slate-900 border-r border-slate-800 text-slate-100">
+    <div className="flex flex-col h-full bg-white border-r border-slate-200 text-slate-800">
       {/* Brand Header */}
-      <div className="flex items-center justify-between p-6 border-b border-slate-800">
+      <div className="flex items-center justify-between p-6 border-b border-slate-200">
         <Link href="/admin" className="flex items-center gap-2">
-          <div className="p-2 bg-indigo-600/10 border border-indigo-500/20 rounded-xl text-indigo-400">
+          <div className="p-2 bg-indigo-50 border border-indigo-100 rounded-xl text-indigo-650">
             <Sparkles className="w-5 h-5 animate-pulse" />
           </div>
           <div>
-            <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-indigo-200 via-indigo-100 to-purple-200 bg-clip-text text-transparent">
+            <span className="font-extrabold text-lg tracking-tight text-slate-900">
               VCard Studio
             </span>
-            <span className="block text-[10px] text-indigo-400 font-bold tracking-widest uppercase">
+            <span className="block text-[10px] text-indigo-650 font-bold tracking-widest uppercase">
               {user?.role === 'business_owner' ? 'Owner Portal' : 'Admin Suite'}
             </span>
           </div>
@@ -83,7 +83,7 @@ export default function Sidebar({ onMobileToggle, isMobileOpen = false }: Sideba
         {onMobileToggle && (
           <button 
             onClick={onMobileToggle}
-            className="md:hidden p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-colors"
+            className="md:hidden p-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -102,12 +102,12 @@ export default function Sidebar({ onMobileToggle, isMobileOpen = false }: Sideba
               href={item.path}
               className={`flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl transition-all ${
                 isActive
-                  ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-900/20'
-                  : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'
+                  ? 'bg-indigo-600 text-white shadow-sm'
+                  : 'text-slate-500 hover:bg-slate-50 hover:text-slate-850'
               }`}
               onClick={() => onMobileToggle && onMobileToggle()}
             >
-              <Icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-slate-300'}`} />
+              <Icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-slate-650'}`} />
               {item.name}
             </Link>
           );
@@ -115,16 +115,16 @@ export default function Sidebar({ onMobileToggle, isMobileOpen = false }: Sideba
       </nav>
 
       {/* User Footer Profile & Logout */}
-      <div className="p-4 border-t border-slate-800 bg-slate-950/40 flex flex-col gap-4">
+      <div className="p-4 border-t border-slate-200 bg-slate-50/50 flex flex-col gap-4">
         <div className="flex items-center gap-3 px-2">
-          <div className="p-2 bg-slate-800 rounded-full text-slate-400">
+          <div className="p-2 bg-slate-200 rounded-full text-slate-600">
             <User className="w-5 h-5" />
           </div>
           <div className="min-w-0 flex-1">
-            <span className="block text-sm font-bold truncate text-slate-200">
+            <span className="block text-sm font-bold truncate text-slate-800">
               {user?.role === 'business_owner' ? 'Business Owner' : 'Super Admin'}
             </span>
-            <span className="block text-xs text-slate-500 truncate">
+            <span className="block text-xs text-slate-450 truncate">
               {user?.email || 'admin@vcard.com'}
             </span>
           </div>
@@ -132,7 +132,7 @@ export default function Sidebar({ onMobileToggle, isMobileOpen = false }: Sideba
         
         <button
           onClick={handleLogout}
-          className="flex items-center justify-center gap-2 w-full py-2.5 bg-slate-800 hover:bg-red-950/30 border border-slate-700/50 hover:border-red-900/30 text-slate-300 hover:text-red-300 rounded-xl text-xs font-semibold tracking-wide transition-all uppercase"
+          className="flex items-center justify-center gap-2 w-full py-2.5 bg-slate-100 hover:bg-red-50 border border-slate-200 hover:border-red-200 text-slate-700 hover:text-red-650 rounded-xl text-xs font-semibold tracking-wide transition-all uppercase"
         >
           <LogOut className="w-4 h-4" />
           Terminate Session

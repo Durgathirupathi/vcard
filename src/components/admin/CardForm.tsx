@@ -408,33 +408,34 @@ export default function CardForm({
       <div className="flex items-center gap-4">
         <button
           onClick={() => router.push('/admin/cards')}
-          className="p-2.5 bg-slate-900 border border-slate-800 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
+          className="p-2.5 bg-white border border-slate-200 rounded-xl hover:border-slate-350 text-slate-500 hover:text-slate-800 transition-colors shadow-sm"
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
-        <div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-white">
+        <div className="text-left">
+          <h1 className="text-2xl font-black tracking-tight text-slate-900">
             {initialCard ? `Configure ${businessName}` : 'Build New Digital Card'}
           </h1>
-          <p className="text-slate-400 text-xs mt-0.5">
+          <p className="text-slate-500 text-xs mt-0.5 font-medium">
             Fill in business profiles across sections, select templates, and launch.
           </p>
         </div>
       </div>
 
       {/* Tabs Panel */}
-      <div className="flex overflow-x-auto border-b border-slate-850 gap-2 pb-1 scrollbar-thin">
+      <div className="flex overflow-x-auto border-b border-slate-200 gap-2 pb-1 scrollbar-thin">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
           return (
             <button
               key={tab.id}
+              type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-5 py-3.5 text-xs font-bold whitespace-nowrap rounded-t-xl transition-all border-b-2 ${
+              className={`flex items-center gap-2 px-5 py-3.5 text-xs font-black whitespace-nowrap rounded-t-xl transition-all border-b-2 ${
                 isActive
-                  ? 'border-indigo-500 bg-slate-900/60 text-indigo-400'
-                  : 'border-transparent text-slate-400 hover:text-slate-200'
+                  ? 'border-indigo-600 bg-indigo-50/50 text-indigo-700'
+                  : 'border-transparent text-slate-500 hover:text-slate-800'
               }`}
             >
               <Icon className="w-4 h-4" />
@@ -446,137 +447,137 @@ export default function CardForm({
 
       {/* Error notification */}
       {error && (
-        <div className="p-4 bg-red-950/40 border border-red-800/30 rounded-xl text-red-300 text-xs font-semibold">
+        <div className="p-4 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-xs font-bold text-left">
           {error}
         </div>
       )}
 
       {/* Form Element */}
-      <form onSubmit={handleSubmit} className="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-6 md:p-8 space-y-8 shadow-xl">
+      <form onSubmit={handleSubmit} className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 space-y-8 shadow-sm">
         
         {/* ==================================================== */}
         {/* TAB 1: CORE INFO & CONTACTS */}
         {/* ==================================================== */}
         {activeTab === 'info' && (
-          <div className="space-y-8 animate-fadeIn">
+          <div className="space-y-8 animate-fadeIn text-left">
             <div>
-              <h3 className="text-lg font-bold text-slate-200 border-b border-slate-850 pb-2 mb-4">Basic Information</h3>
+              <h3 className="text-base font-extrabold text-slate-900 border-b border-slate-100 pb-2 mb-4">Basic Information</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1">Business Name *</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1">Business Name *</label>
                   <input
                     type="text"
                     required
                     value={businessName}
                     onChange={(e) => setBusinessName(e.target.value)}
                     placeholder="Mahalakshmi Services"
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 hover:border-slate-700 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                   />
                 </div>
                 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1">URL Slug (Auto Generated) *</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1">URL Slug (Auto Generated) *</label>
                   <div className="relative flex items-center">
-                    <span className="absolute left-4 text-xs font-semibold text-slate-500">/</span>
+                    <span className="absolute left-4 text-xs font-bold text-slate-400">/</span>
                     <input
                       type="text"
                       required
                       value={slug}
                       onChange={(e) => setSlug(e.target.value.toLowerCase().replace(/\s+/g, '-'))}
                       placeholder="mahalakshmi-services"
-                      className="w-full pl-7 pr-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                      className="w-full pl-7 pr-4 py-3 bg-slate-50 border border-slate-200 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                     />
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1">Owner Name *</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1">Owner Name *</label>
                   <input
                     type="text"
                     required
                     value={ownerName}
                     onChange={(e) => setOwnerName(e.target.value)}
                     placeholder="M. Mahalakshmi"
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1">Owner Designation</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1">Owner Designation</label>
                   <input
                     type="text"
                     value={designation}
                     onChange={(e) => setDesignation(e.target.value)}
                     placeholder="Senior Insurance Consultant"
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1">Business Category *</label>
+                  <label className="text-[10px] font-black text-slate-455 uppercase tracking-widest pl-1">Business Category *</label>
                   <input
                     type="text"
                     required
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                     placeholder="Insurance & Home Loans"
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5 md:col-span-2">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1">Business Description</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1">Business Description</label>
                   <textarea
                     rows={3}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Provide a brief elegant overview of your products, brand, or mission..."
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200 resize-none"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium resize-none"
                   />
                 </div>
               </div>
             </div>
 
             <div>
-              <h3 className="text-lg font-bold text-slate-200 border-b border-slate-850 pb-2 mb-4">Contact Information</h3>
+              <h3 className="text-base font-extrabold text-slate-900 border-b border-slate-100 pb-2 mb-4">Contact Information</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1">Mobile Number *</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1">Mobile Number *</label>
                   <input
                     type="text"
                     required
                     value={mobile}
                     onChange={(e) => setMobile(e.target.value)}
                     placeholder="+91 98765 43210"
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1">WhatsApp Number *</label>
+                  <label className="text-[10px] font-black text-slate-455 uppercase tracking-widest pl-1">WhatsApp Number *</label>
                   <input
                     type="text"
                     required
                     value={whatsapp}
                     onChange={(e) => setWhatsapp(e.target.value)}
                     placeholder="+91 98765 43210"
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1">Alternate Mobile</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1">Alternate Mobile</label>
                   <input
                     type="text"
                     value={alternateMobile}
                     onChange={(e) => setAlternateMobile(e.target.value)}
                     placeholder="+91 87654 32109"
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1">Email Address *</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1">Email Address *</label>
                   <input
                     type="email"
                     required
@@ -588,40 +589,40 @@ export default function CardForm({
                       }
                     }}
                     placeholder="info@mahalakshmiservices.com"
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1">Website URL</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1">Website URL</label>
                   <input
                     type="url"
                     value={website}
                     onChange={(e) => setWebsite(e.target.value)}
                     placeholder="https://mahalakshmiservices.com"
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1">Google Maps Link</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1">Google Maps Link</label>
                   <input
                     type="url"
                     value={mapsLink}
                     onChange={(e) => setMapsLink(e.target.value)}
                     placeholder="https://goo.gl/maps/..."
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5 md:col-span-2">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1">Physical Address</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1">Physical Address</label>
                   <textarea
                     rows={2}
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     placeholder="Suite 104, MG Road, Bangalore - 560001"
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200 resize-none"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium resize-none"
                   />
                 </div>
               </div>
@@ -629,71 +630,71 @@ export default function CardForm({
 
             {/* Social Links Sub-section */}
             <div>
-              <h3 className="text-lg font-bold text-slate-200 border-b border-slate-850 pb-2 mb-4">Social Media Links</h3>
+              <h3 className="text-base font-extrabold text-slate-900 border-b border-slate-100 pb-2 mb-4">Social Media Links</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1 flex items-center gap-1.5"><FacebookIcon /> Facebook URL</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1 flex items-center gap-1.5"><FacebookIcon /> Facebook URL</label>
                   <input
                     type="url"
                     value={facebookUrl}
                     onChange={(e) => setFacebookUrl(e.target.value)}
                     placeholder="https://facebook.com/brand"
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1 flex items-center gap-1.5"><InstagramIcon /> Instagram URL</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1 flex items-center gap-1.5"><InstagramIcon /> Instagram URL</label>
                   <input
                     type="url"
                     value={instagramUrl}
                     onChange={(e) => setInstagramUrl(e.target.value)}
                     placeholder="https://instagram.com/brand"
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1 flex items-center gap-1.5"><LinkedinIcon /> LinkedIn URL</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1 flex items-center gap-1.5"><LinkedinIcon /> LinkedIn URL</label>
                   <input
                     type="url"
                     value={linkedinUrl}
                     onChange={(e) => setLinkedinUrl(e.target.value)}
                     placeholder="https://linkedin.com/in/profile"
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1 flex items-center gap-1.5"><YoutubeIcon /> YouTube Channel</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1 flex items-center gap-1.5"><YoutubeIcon /> YouTube Channel</label>
                   <input
                     type="url"
                     value={youtubeUrl}
                     onChange={(e) => setYoutubeUrl(e.target.value)}
                     placeholder="https://youtube.com/c/channel"
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1 flex items-center gap-1.5"><TelegramIcon /> Telegram URL</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1 flex items-center gap-1.5"><TelegramIcon /> Telegram URL</label>
                   <input
                     type="url"
                     value={telegramUrl}
                     onChange={(e) => setTelegramUrl(e.target.value)}
                     placeholder="https://t.me/username"
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1 flex items-center gap-1.5"><TwitterIcon /> Twitter/X URL</label>
+                  <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1 flex items-center gap-1.5"><TwitterIcon /> Twitter/X URL</label>
                   <input
                     type="url"
                     value={twitterUrl}
                     onChange={(e) => setTwitterUrl(e.target.value)}
                     placeholder="https://twitter.com/username"
-                    className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                    className="px-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:bg-white focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 font-medium"
                   />
                 </div>
               </div>
@@ -701,35 +702,35 @@ export default function CardForm({
 
             {/* Owner Account Creation Settings - Only visible for Super Admin during card creation */}
             {currentUser?.role === 'super_admin' && !initialCard && (
-              <div className="p-6 bg-indigo-950/20 border border-indigo-500/20 rounded-2xl space-y-4">
-                <div className="flex items-center gap-2 text-indigo-400 border-b border-indigo-900/40 pb-2">
-                  <Settings className="w-5 h-5 animate-spin" style={{ animationDuration: '6s' }} />
-                  <h3 className="text-base font-bold text-slate-200">Owner Account Provisioning</h3>
+              <div className="p-6 bg-indigo-50 border border-indigo-100 rounded-2xl space-y-4 text-left">
+                <div className="flex items-center gap-2 text-indigo-700 border-b border-indigo-100 pb-2">
+                  <Settings className="w-5 h-5" />
+                  <h3 className="text-base font-extrabold text-slate-900">Owner Account Provisioning</h3>
                 </div>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-slate-600 font-medium leading-relaxed">
                   Provision a dedicated login credential for this business owner. They will be restricted to managing ONLY this card, its services, and inquiries.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1">Owner Login Email *</label>
+                    <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1">Owner Login Email *</label>
                     <input
                       type="email"
                       required
                       value={ownerEmail}
                       onChange={(e) => setOwnerEmail(e.target.value)}
                       placeholder="owner@domain.com"
-                      className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                      className="px-4 py-3 bg-white border border-slate-200 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-800 font-medium"
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider pl-1">Owner Password *</label>
+                    <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-1">Owner Password *</label>
                     <input
                       type="password"
                       required
                       value={ownerPassword}
                       onChange={(e) => setOwnerPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="px-4 py-3 bg-slate-950 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200"
+                      className="px-4 py-3 bg-white border border-slate-200 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-800 font-medium"
                     />
                   </div>
                 </div>
@@ -742,9 +743,9 @@ export default function CardForm({
         {/* TAB 2: BRANDING & TEMPLATE LAYOUT */}
         {/* ==================================================== */}
         {activeTab === 'branding' && (
-          <div className="space-y-8 animate-fadeIn">
+          <div className="space-y-8 animate-fadeIn text-left">
             <div>
-              <h3 className="text-lg font-bold text-slate-200 border-b border-slate-850 pb-2 mb-4">Branding Assets</h3>
+              <h3 className="text-base font-extrabold text-slate-900 border-b border-slate-100 pb-2 mb-4">Branding Assets</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <ImageUpload
                   label="Profile Photo"
@@ -773,7 +774,7 @@ export default function CardForm({
             </div>
 
             <div>
-              <h3 className="text-lg font-bold text-slate-200 border-b border-slate-850 pb-2 mb-4">Choose Template</h3>
+              <h3 className="text-base font-extrabold text-slate-900 border-b border-slate-100 pb-2 mb-4">Choose Template</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {templatesList.map((tpl) => {
                   const isSelected = templateId === tpl.id;
@@ -784,25 +785,25 @@ export default function CardForm({
                       onClick={() => setTemplateId(tpl.id)}
                       className={`p-5 rounded-2xl border text-left flex flex-col justify-between h-40 transition-all ${
                         isSelected
-                          ? 'border-indigo-500 bg-indigo-950/20 shadow-md shadow-indigo-950/30'
-                          : 'border-slate-850 bg-slate-950/50 hover:border-slate-800 hover:bg-slate-950/80'
+                          ? 'border-indigo-600 bg-indigo-50/50'
+                          : 'border-slate-200 bg-slate-50 hover:border-slate-350 hover:bg-white'
                       }`}
                     >
                       <div>
                         <div className="flex items-center justify-between gap-2">
-                          <span className={`text-sm font-extrabold ${isSelected ? 'text-indigo-400' : 'text-slate-200'}`}>
+                          <span className={`text-sm font-bold ${isSelected ? 'text-indigo-700' : 'text-slate-900'}`}>
                             {tpl.name}
                           </span>
                           {isSelected && (
-                            <span className="w-2.5 h-2.5 bg-indigo-500 rounded-full animate-ping" />
+                            <span className="w-2 h-2 bg-indigo-600 rounded-full" />
                           )}
                         </div>
-                        <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                        <p className="text-xs text-slate-500 mt-2 leading-relaxed font-semibold">
                           {tpl.desc}
                         </p>
                       </div>
 
-                      <span className={`text-[10px] font-bold uppercase tracking-wider ${isSelected ? 'text-indigo-400' : 'text-slate-600'}`}>
+                      <span className={`text-[10px] font-black uppercase tracking-wider ${isSelected ? 'text-indigo-700' : 'text-slate-400'}`}>
                         {isSelected ? 'Active Template' : 'Select Layout'}
                       </span>
                     </button>
@@ -817,26 +818,26 @@ export default function CardForm({
         {/* TAB 3: SERVICES MANAGEMENT */}
         {/* ==================================================== */}
         {activeTab === 'services' && (
-          <div className="space-y-8 animate-fadeIn">
+          <div className="space-y-8 animate-fadeIn text-left">
             <div>
-              <h3 className="text-lg font-bold text-slate-200 border-b border-slate-850 pb-2 mb-4">Manage Services</h3>
-              <p className="text-slate-400 text-xs -mt-2 mb-6">Add products, services, or portfolios that this card will showcase.</p>
+              <h3 className="text-base font-extrabold text-slate-900 border-b border-slate-100 pb-2 mb-4">Manage Services</h3>
+              <p className="text-slate-500 text-xs -mt-2 mb-6 font-medium">Add products, services, or portfolios that this card will showcase.</p>
               
               {/* Form to Add New Service */}
-              <div className="p-5 bg-slate-950/50 border border-slate-850 rounded-2xl space-y-4 mb-8">
-                <span className="text-xs font-bold text-indigo-400 uppercase tracking-widest block mb-1">
+              <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-4 mb-8">
+                <span className="text-xs font-black text-indigo-700 uppercase tracking-widest block mb-1">
                   Add New Item
                 </span>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex flex-col gap-1">
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider pl-0.5">Service Title</label>
+                    <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-0.5">Service Title</label>
                     <input
                       type="text"
                       value={newService.title}
                       onChange={(e) => setNewService({ ...newService, title: e.target.value })}
                       placeholder="Life Insurance"
-                      className="px-4 py-2.5 bg-slate-900 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-200"
+                      className="px-4 py-2.5 bg-white border border-slate-200 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-800"
                     />
                   </div>
 
@@ -851,13 +852,13 @@ export default function CardForm({
                   </div>
 
                   <div className="flex flex-col gap-1 md:col-span-2">
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider pl-0.5">Service Description</label>
+                    <label className="text-[10px] font-black text-slate-450 uppercase tracking-widest pl-0.5">Service Description</label>
                     <textarea
                       rows={2}
                       value={newService.description}
                       onChange={(e) => setNewService({ ...newService, description: e.target.value })}
                       placeholder="Give a beautiful, short summary explaining features or deliverables..."
-                      className="px-4 py-2.5 bg-slate-900 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-200 resize-none"
+                      className="px-4 py-2.5 bg-white border border-slate-200 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-800 resize-none"
                     />
                   </div>
                 </div>
@@ -865,7 +866,7 @@ export default function CardForm({
                 <button
                   type="button"
                   onClick={addService}
-                  className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 self-start"
+                  className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-755 text-white rounded-xl text-xs font-black transition-all flex items-center gap-1.5 self-start shadow-sm"
                 >
                   <Plus className="w-4 h-4" />
                   Append Service
@@ -873,25 +874,25 @@ export default function CardForm({
               </div>
 
               {/* Rendered Services List */}
-              <div className="space-y-4 bg-slate-950/20 p-5 border border-slate-850 rounded-2xl">
-                <div className="flex items-center justify-between border-b border-slate-850 pb-3.5 pl-1 gap-4">
-                  <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block">
+              <div className="space-y-4 bg-slate-50 p-5 border border-slate-200 rounded-2xl">
+                <div className="flex items-center justify-between border-b border-slate-200 pb-3.5 pl-1 gap-4">
+                  <span className="text-[9px] font-black text-slate-450 uppercase tracking-widest block">
                     Active Services Catalog
                   </span>
-                  <span className="text-xs font-bold text-indigo-400 whitespace-nowrap bg-indigo-950/30 border border-indigo-900/30 px-3 py-1 rounded-full">
+                  <span className="text-[10px] font-black text-indigo-700 whitespace-nowrap bg-indigo-50 border border-indigo-100 px-3 py-1 rounded-full uppercase tracking-wider">
                     Services Used: {services.length} / {PORTAL_LIMITS.MAX_SERVICES}
                   </span>
                 </div>
                 {/* Visual Progress Bar */}
-                <div className="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-850">
+                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden border border-slate-300">
                   <div 
-                    className="bg-gradient-to-r from-indigo-500 to-purple-500 h-full rounded-full transition-all duration-500"
+                    className="bg-indigo-650 h-full rounded-full transition-all duration-500"
                     style={{ width: `${Math.min(100, (services.length / PORTAL_LIMITS.MAX_SERVICES) * 100)}%` }}
                   />
                 </div>
                 
                 {services.length === 0 ? (
-                  <div className="p-8 text-center bg-slate-950/20 border border-dashed border-slate-850 rounded-2xl text-slate-500 text-xs">
+                  <div className="p-8 text-center bg-white border border-dashed border-slate-200 rounded-2xl text-slate-500 text-xs font-semibold">
                     No services appended yet. Add services above to show them in the card templates!
                   </div>
                 ) : (
@@ -899,21 +900,21 @@ export default function CardForm({
                     {services.map((item, idx) => (
                       <div 
                         key={item.id}
-                        className="p-4 bg-slate-950/40 border border-slate-850 rounded-2xl flex gap-3 items-start justify-between group"
+                        className="p-4 bg-white border border-slate-200 rounded-2xl flex gap-3 items-start justify-between group"
                       >
                         <div className="flex gap-3 min-w-0">
                           {item.image && (
                             <img 
                               src={item.image} 
                               alt={item.title}
-                              className="w-14 h-14 rounded-xl object-cover border border-slate-850 bg-slate-900 flex-shrink-0"
+                              className="w-14 h-14 rounded-xl object-cover border border-slate-200 bg-slate-50 flex-shrink-0"
                             />
                           )}
                           <div className="min-w-0">
-                            <span className="block text-sm font-bold text-slate-200 truncate">
+                            <span className="block text-sm font-bold text-slate-900 truncate">
                               {item.title}
                             </span>
-                            <p className="text-xs text-slate-400 line-clamp-2 mt-0.5">
+                            <p className="text-xs text-slate-500 line-clamp-2 mt-0.5 font-medium">
                               {item.description}
                             </p>
                           </div>
@@ -921,7 +922,7 @@ export default function CardForm({
                         <button
                           type="button"
                           onClick={() => removeService(item.id)}
-                          className="p-2 text-slate-500 hover:text-red-400 hover:bg-red-950/20 rounded-lg transition-colors flex-shrink-0"
+                          className="p-2 text-slate-400 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors flex-shrink-0"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -938,13 +939,13 @@ export default function CardForm({
         {/* TAB 4: GALLERY & OTHER MEDIA */}
         {/* ==================================================== */}
         {activeTab === 'media' && (
-          <div className="space-y-8 animate-fadeIn">
+          <div className="space-y-8 animate-fadeIn text-left">
             {/* Gallery Images Section */}
             <div>
-              <h3 className="text-lg font-bold text-slate-200 border-b border-slate-850 pb-2 mb-4">Gallery Images</h3>
-              <p className="text-slate-400 text-xs -mt-2 mb-6">Add photographs of products, certificate accomplishments, office, or team.</p>
+              <h3 className="text-base font-extrabold text-slate-900 border-b border-slate-100 pb-2 mb-4">Gallery Images</h3>
+              <p className="text-slate-500 text-xs -mt-2 mb-6 font-medium">Add photographs of products, certificate accomplishments, office, or team.</p>
 
-              <div className="p-5 bg-slate-950/50 border border-slate-850 rounded-2xl space-y-4 mb-8">
+              <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-4 mb-8">
                 <ImageUpload
                   label="Upload New Gallery Photo"
                   value={newGalleryUrl}
@@ -956,7 +957,7 @@ export default function CardForm({
                   type="button"
                   onClick={addGalleryImage}
                   disabled={!newGalleryUrl}
-                  className="px-5 py-3 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 disabled:hover:bg-indigo-600 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 self-start"
+                  className="px-5 py-3 bg-indigo-600 hover:bg-indigo-755 disabled:opacity-40 disabled:hover:bg-indigo-600 text-white rounded-xl text-xs font-black transition-all flex items-center gap-1.5 self-start shadow-sm"
                 >
                   <Plus className="w-4.5 h-4.5" />
                   Add Photo to Gallery
@@ -964,25 +965,25 @@ export default function CardForm({
               </div>
 
               {/* Render Gallery */}
-              <div className="space-y-4 bg-slate-950/20 p-5 border border-slate-850 rounded-2xl">
-                <div className="flex items-center justify-between border-b border-slate-850 pb-3.5 pl-1 gap-4">
-                  <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block">
+              <div className="space-y-4 bg-slate-50 p-5 border border-slate-200 rounded-2xl">
+                <div className="flex items-center justify-between border-b border-slate-200 pb-3.5 pl-1 gap-4">
+                  <span className="text-[9px] font-black text-slate-450 uppercase tracking-widest block">
                     Active Gallery Photos
                   </span>
-                  <span className="text-xs font-bold text-indigo-400 whitespace-nowrap bg-indigo-950/30 border border-indigo-900/30 px-3 py-1 rounded-full">
+                  <span className="text-[10px] font-black text-indigo-700 whitespace-nowrap bg-indigo-50 border border-indigo-100 px-3 py-1 rounded-full uppercase tracking-wider">
                     Gallery Images Used: {gallery.length} / {PORTAL_LIMITS.MAX_GALLERY_IMAGES}
                   </span>
                 </div>
                 {/* Visual Progress Bar */}
-                <div className="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-850">
+                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden border border-slate-300">
                   <div 
-                    className="bg-gradient-to-r from-indigo-500 to-purple-500 h-full rounded-full transition-all duration-500"
+                    className="bg-indigo-650 h-full rounded-full transition-all duration-500"
                     style={{ width: `${Math.min(100, (gallery.length / PORTAL_LIMITS.MAX_GALLERY_IMAGES) * 100)}%` }}
                   />
                 </div>
                 
                 {gallery.length === 0 ? (
-                  <div className="p-8 text-center bg-slate-950/20 border border-dashed border-slate-850 rounded-2xl text-slate-500 text-xs">
+                  <div className="p-8 text-center bg-white border border-dashed border-slate-200 rounded-2xl text-slate-500 text-xs font-semibold">
                     No gallery images appended yet.
                   </div>
                 ) : (
@@ -990,7 +991,7 @@ export default function CardForm({
                   {gallery.map((img) => (
                     <div 
                       key={img.id}
-                      className="relative rounded-xl overflow-hidden border border-slate-800 bg-slate-950 group aspect-video"
+                      className="relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100 group aspect-video"
                     >
                       <img 
                         src={img.imageUrl} 
@@ -1000,7 +1001,7 @@ export default function CardForm({
                       <button
                         type="button"
                         onClick={() => removeGalleryImage(img.id)}
-                        className="absolute top-2 right-2 p-1.5 bg-slate-950/80 hover:bg-red-650 text-slate-400 hover:text-white rounded-lg transition-colors border border-slate-800"
+                        className="absolute top-2 right-2 p-1.5 bg-white/95 hover:bg-rose-600 text-slate-500 hover:text-white rounded-lg transition-colors border border-slate-200"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -1013,21 +1014,21 @@ export default function CardForm({
 
             {/* YouTube Videos Section */}
             <div>
-              <h3 className="text-lg font-bold text-slate-200 border-b border-slate-850 pb-2 mb-4">Embedded YouTube Videos</h3>
-              <p className="text-slate-400 text-xs -mt-2 mb-6">Attach corporate commercials, testimonial video logs, or promotional videos.</p>
+              <h3 className="text-base font-extrabold text-slate-900 border-b border-slate-100 pb-2 mb-4">Embedded YouTube Videos</h3>
+              <p className="text-slate-500 text-xs -mt-2 mb-6 font-medium">Attach corporate commercials, testimonial video logs, or promotional videos.</p>
 
-              <div className="flex gap-3 p-4 bg-slate-950/50 border border-slate-850 rounded-2xl mb-8">
+              <div className="flex gap-3 p-4 bg-slate-50 border border-slate-200 rounded-2xl mb-8">
                 <input
                   type="url"
                   value={newVideoUrl}
                   onChange={(e) => setNewVideoUrl(e.target.value)}
                   placeholder="Paste YouTube Video URL (e.g. https://www.youtube.com/watch?v=...)"
-                  className="flex-1 px-4 py-3 bg-slate-900 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-200"
+                  className="flex-1 px-4 py-3 bg-white border border-slate-200 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-800"
                 />
                 <button
                   type="button"
                   onClick={addVideo}
-                  className="px-5 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5"
+                  className="px-5 py-3 bg-indigo-600 hover:bg-indigo-755 text-white rounded-xl text-xs font-black transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <Plus className="w-4.5 h-4.5" />
                   Add Video
@@ -1036,7 +1037,7 @@ export default function CardForm({
 
               {/* Render videos */}
               {videos.length === 0 ? (
-                <div className="p-8 text-center bg-slate-950/20 border border-dashed border-slate-850 rounded-2xl text-slate-500 text-xs">
+                <div className="p-8 text-center bg-white border border-dashed border-slate-200 rounded-2xl text-slate-500 text-xs font-semibold">
                   No video embeds appended yet.
                 </div>
               ) : (
@@ -1044,16 +1045,16 @@ export default function CardForm({
                   {videos.map((vid) => (
                     <div 
                       key={vid.id}
-                      className="p-3 bg-slate-950/40 border border-slate-850 rounded-2xl flex items-center justify-between gap-3 text-xs"
+                      className="p-3 bg-white border border-slate-200 rounded-2xl flex items-center justify-between gap-3 text-xs"
                     >
                       <div className="flex items-center gap-2 min-w-0">
                         <YoutubeIcon />
-                        <span className="truncate text-slate-300 font-semibold">{vid.youtubeUrl}</span>
+                        <span className="truncate text-slate-700 font-semibold">{vid.youtubeUrl}</span>
                       </div>
                       <button
                         type="button"
                         onClick={() => removeVideo(vid.id)}
-                        className="p-2 text-slate-500 hover:text-red-400 hover:bg-red-950/20 rounded-lg transition-colors flex-shrink-0"
+                        className="p-2 text-slate-400 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors flex-shrink-0"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -1069,26 +1070,26 @@ export default function CardForm({
         {/* TAB 5: TESTIMONIALS MANAGEMENT */}
         {/* ==================================================== */}
         {activeTab === 'testimonials' && (
-          <div className="space-y-8 animate-fadeIn">
+          <div className="space-y-8 animate-fadeIn text-left">
             <div>
-              <h3 className="text-lg font-bold text-slate-200 border-b border-slate-850 pb-2 mb-4">Customer Testimonials</h3>
-              <p className="text-slate-400 text-xs -mt-2 mb-6">Feature reviews from top clients to establish massive brand credibility.</p>
+              <h3 className="text-base font-extrabold text-slate-900 border-b border-slate-100 pb-2 mb-4">Customer Testimonials</h3>
+              <p className="text-slate-500 text-xs -mt-2 mb-6 font-medium">Feature reviews from top clients to establish massive brand credibility.</p>
 
               {/* Add testimonial form */}
-              <div className="p-5 bg-slate-950/50 border border-slate-850 rounded-2xl space-y-4 mb-8">
-                <span className="text-xs font-bold text-indigo-400 uppercase tracking-widest block mb-1">
+              <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-4 mb-8">
+                <span className="text-xs font-black text-indigo-700 uppercase tracking-widest block mb-1">
                   Add New Review
                 </span>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="flex flex-col gap-1">
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider pl-0.5">Customer Name</label>
+                    <label className="text-[10px] font-black text-slate-455 uppercase tracking-widest pl-0.5">Customer Name</label>
                     <input
                       type="text"
                       value={newTestimonial.customerName}
                       onChange={(e) => setNewTestimonial({ ...newTestimonial, customerName: e.target.value })}
                       placeholder="Rajesh Subramanian"
-                      className="px-4 py-2.5 bg-slate-900 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-200"
+                      className="px-4 py-2.5 bg-white border border-slate-200 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-800"
                     />
                   </div>
 
@@ -1103,7 +1104,7 @@ export default function CardForm({
                   </div>
 
                   <div className="flex flex-col gap-1">
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider pl-0.5">Rating (1-5 Stars)</label>
+                    <label className="text-[10px] font-black text-slate-455 uppercase tracking-widest pl-0.5">Rating (1-5 Stars)</label>
                     <div className="flex items-center gap-1.5 h-10 pl-1">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <button
@@ -1112,20 +1113,20 @@ export default function CardForm({
                           onClick={() => setNewTestimonial({ ...newTestimonial, rating: star })}
                           className="text-amber-400 hover:scale-110 transition-transform"
                         >
-                          <Star className={`w-5 h-5 ${newTestimonial.rating >= star ? 'fill-amber-400 text-amber-400' : 'text-slate-600'}`} />
+                          <Star className={`w-5 h-5 ${newTestimonial.rating >= star ? 'fill-amber-400 text-amber-400' : 'text-slate-300'}`} />
                         </button>
                       ))}
                     </div>
                   </div>
 
                   <div className="flex flex-col gap-1 md:col-span-3">
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider pl-0.5">Customer Review Feedback</label>
+                    <label className="text-[10px] font-black text-slate-455 uppercase tracking-widest pl-0.5">Customer Review Feedback</label>
                     <textarea
                       rows={2}
                       value={newTestimonial.review}
                       onChange={(e) => setNewTestimonial({ ...newTestimonial, review: e.target.value })}
                       placeholder="Write the recommendation or feedback statement..."
-                      className="px-4 py-2.5 bg-slate-900 border border-slate-850 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-200 resize-none"
+                      className="px-4 py-2.5 bg-white border border-slate-200 focus:border-indigo-500 focus:outline-none rounded-xl text-xs text-slate-800 resize-none"
                     />
                   </div>
                 </div>
@@ -1133,7 +1134,7 @@ export default function CardForm({
                 <button
                   type="button"
                   onClick={addTestimonial}
-                  className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 self-start"
+                  className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-755 text-white rounded-xl text-xs font-black transition-all flex items-center gap-1.5 self-start shadow-sm"
                 >
                   <Plus className="w-4 h-4" />
                   Append Review
@@ -1142,12 +1143,12 @@ export default function CardForm({
 
               {/* Render testimonials */}
               <div className="space-y-4">
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block pl-1">
+                <span className="text-[9px] font-black text-slate-450 uppercase tracking-widest block pl-1">
                   Active Reviews List ({testimonials.length})
                 </span>
 
                 {testimonials.length === 0 ? (
-                  <div className="p-8 text-center bg-slate-950/20 border border-dashed border-slate-850 rounded-2xl text-slate-500 text-xs">
+                  <div className="p-8 text-center bg-white border border-dashed border-slate-200 rounded-2xl text-slate-500 text-xs font-semibold">
                     No recommendations or reviews added yet.
                   </div>
                 ) : (
@@ -1155,30 +1156,30 @@ export default function CardForm({
                     {testimonials.map((item) => (
                       <div 
                         key={item.id}
-                        className="p-4 bg-slate-950/40 border border-slate-850 rounded-2xl flex gap-3 items-start justify-between"
+                        className="p-4 bg-white border border-slate-200 rounded-2xl flex gap-3 items-start justify-between"
                       >
                         <div className="flex gap-3 min-w-0">
                           {item.photo ? (
                             <img 
                               src={item.photo} 
                               alt={item.customerName}
-                              className="w-10 h-10 rounded-full object-cover border border-slate-800 bg-slate-900 flex-shrink-0"
+                              className="w-10 h-10 rounded-full object-cover border border-slate-200 bg-slate-50 flex-shrink-0"
                             />
                           ) : (
-                            <div className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center font-bold text-xs text-indigo-400 flex-shrink-0">
+                            <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center font-bold text-xs text-indigo-650 flex-shrink-0 border border-slate-200">
                               {item.customerName.charAt(0)}
                             </div>
                           )}
                           <div className="min-w-0 space-y-1">
-                            <span className="block text-xs font-bold text-slate-200 truncate">
+                            <span className="block text-xs font-bold text-slate-900 truncate">
                               {item.customerName}
                             </span>
                             <div className="flex items-center gap-0.5">
                               {Array.from({ length: 5 }).map((_, i) => (
-                                <Star key={i} className={`w-3 h-3 ${i < item.rating ? 'fill-amber-400 text-amber-400' : 'text-slate-700'}`} />
+                                <Star key={i} className={`w-3 h-3 ${i < item.rating ? 'fill-amber-400 text-amber-400' : 'text-slate-200'}`} />
                               ))}
                             </div>
-                            <p className="text-xs text-slate-400 italic">
+                            <p className="text-xs text-slate-550 italic font-medium leading-relaxed">
                               &ldquo;{item.review}&rdquo;
                             </p>
                           </div>
@@ -1186,7 +1187,7 @@ export default function CardForm({
                         <button
                           type="button"
                           onClick={() => removeTestimonial(item.id)}
-                          className="p-2 text-slate-500 hover:text-red-400 hover:bg-red-950/20 rounded-lg transition-colors flex-shrink-0"
+                          className="p-2 text-slate-400 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors flex-shrink-0"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -1198,18 +1199,17 @@ export default function CardForm({
             </div>
           </div>
         )}
-
         {/* ==================================================== */}
         {/* SUBMIT BUTTON SECTION FOOTER */}
         {/* ==================================================== */}
-        <div className="pt-6 border-t border-slate-850 flex items-center justify-between gap-4">
-          <span className="text-xs text-slate-500 font-semibold italic">
+        <div className="pt-6 border-t border-slate-200 flex items-center justify-between gap-4">
+          <span className="text-xs text-slate-500 font-semibold italic text-left">
             * Tab 1 Core Info is mandatory to save your VCard.
           </span>
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-950/40 transition-all flex items-center gap-2 hover:scale-[1.02] disabled:opacity-50"
+            className="px-6 py-3.5 bg-indigo-600 hover:bg-indigo-755 text-white rounded-xl text-xs font-black shadow-sm transition-all flex items-center gap-2 hover:scale-[1.01] disabled:opacity-50"
           >
             <Save className="w-4.5 h-4.5" />
             {loading ? 'Committing Changes...' : 'Save Digital Card'}
@@ -1220,13 +1220,13 @@ export default function CardForm({
 
       {/* Premium Glassmorphic Delete Confirmation Dialog */}
       {confirmDeleteType && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/75 backdrop-blur-sm transition-opacity">
-          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl space-y-4">
-            <div className="flex items-center gap-3 text-amber-400">
-              <AlertTriangle className="w-6 h-6 animate-pulse" />
-              <h4 className="text-lg font-bold text-slate-100 font-sans">Confirm Deletion</h4>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm transition-opacity">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 max-w-md w-full mx-4 shadow-xl space-y-4 text-left">
+            <div className="flex items-center gap-3 text-rose-600">
+              <AlertTriangle className="w-6 h-6" />
+              <h4 className="text-lg font-extrabold text-slate-900 font-sans">Confirm Deletion</h4>
             </div>
-            <p className="text-sm text-slate-300 leading-relaxed font-sans">
+            <p className="text-sm text-slate-600 leading-relaxed font-sans font-medium">
               Are you sure you want to delete this {confirmDeleteType === 'service' ? 'service catalog item' : 'gallery image'}? This action cannot be undone.
             </p>
             <div className="flex items-center justify-end gap-3 pt-2">
@@ -1236,14 +1236,14 @@ export default function CardForm({
                   setConfirmDeleteType(null);
                   setDeleteTargetId(null);
                 }}
-                className="px-4 py-2 bg-slate-805 border border-slate-700 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition-all font-sans"
+                className="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-xs font-bold transition-all font-sans"
               >
                 No, Keep It
               </button>
               <button
                 type="button"
                 onClick={executeDelete}
-                className="px-4 py-2 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-red-950/20 font-sans"
+                className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-black transition-all shadow-sm font-sans"
               >
                 Yes, Delete
               </button>

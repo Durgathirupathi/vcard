@@ -19,13 +19,18 @@ export default function AboutUsPage() {
             </span>
           </Link>
 
-          <div className="flex items-center gap-2">
-            <div className="p-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-indigo-650">
-              <Sparkles className="w-4 h-4" />
+          <div className="flex items-center gap-6">
+            <Link href="/contact" className="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-950 transition-colors">
+              Contact Us
+            </Link>
+            <div className="flex items-center gap-2">
+              <div className="p-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-indigo-650">
+                <Sparkles className="w-4 h-4" />
+              </div>
+              <span className="font-extrabold text-sm tracking-tight text-slate-900">
+                VCard Studio
+              </span>
             </div>
-            <span className="font-extrabold text-sm tracking-tight text-slate-900">
-              VCard Studio
-            </span>
           </div>
         </div>
       </nav>
@@ -117,8 +122,12 @@ export default function AboutUsPage() {
       {/* Global White Theme Footer */}
       <footer className="w-full bg-white border-t border-slate-200 py-8 text-center text-slate-500 text-[10px] uppercase font-bold tracking-widest">
         <div>© VCard Studio. Premium Identity Systems. All Rights Reserved.</div>
-        <div className="mt-2 text-slate-400 font-semibold normal-case">
-          Need support? Contact us at <a href="mailto:support@vcard.studio" className="text-indigo-650 hover:underline">support@vcard.studio</a>
+        <div className="mt-2 text-slate-400 font-semibold normal-case flex items-center justify-center gap-3">
+          <Link href="/contact" className="text-indigo-650 hover:underline font-bold">
+            Contact Support
+          </Link>
+          <span>•</span>
+          <span>Email: <a href="mailto:support@vcard.studio" className="text-indigo-650 hover:underline">support@vcard.studio</a></span>
         </div>
       </footer>
     </div>

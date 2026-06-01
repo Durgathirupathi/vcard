@@ -152,17 +152,15 @@ export default function LeadsHubPage() {
     );
   }
 
-  const isOwner = currentUser?.role === 'business_owner';
-
-  return (
+  const isOwner = currentUser?.role === 'business_owner';  return (
     <div className="space-y-8">
       {/* Top Header & Export Action */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-white">
+          <h1 className="text-3xl font-black tracking-tight text-slate-900">
             {isOwner ? 'My Inquiries & Leads' : 'Leads & Inquiries Hub'}
           </h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-slate-500 text-sm mt-1 font-medium">
             {isOwner 
               ? 'View contact requests and feedback submitted specifically for your business profile.'
               : 'Track user submissions, filter inquiries by business, and download reports.'
@@ -172,9 +170,9 @@ export default function LeadsHubPage() {
         <button
           onClick={handleExportCSV}
           disabled={filteredLeads.length === 0}
-          className="px-5 py-3 bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-200 hover:text-white rounded-xl text-sm font-bold shadow-lg transition-all flex items-center justify-center gap-2 hover:scale-[1.02] disabled:opacity-40 disabled:scale-100"
+          className="px-4 py-2.5 bg-white border border-slate-200 hover:border-slate-350 text-slate-700 hover:text-slate-900 rounded-xl text-xs font-black shadow-sm transition-all flex items-center justify-center gap-2 hover:scale-[1.01] disabled:opacity-40 disabled:scale-100"
         >
-          <Download className="w-4.5 h-4.5 text-indigo-400" />
+          <Download className="w-4 h-4 text-indigo-650" />
           Export CSV Spreadsheet
         </button>
       </div>
@@ -183,28 +181,28 @@ export default function LeadsHubPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Search - Full width if owner, else 2-column span */}
         <div className={`relative flex items-center ${isOwner ? 'md:col-span-3' : 'md:col-span-2'}`}>
-          <Search className="absolute left-4 w-5 h-5 text-slate-500" />
+          <Search className="absolute left-4 w-4 h-4 text-slate-400" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search leads by name, email, phone number, or messages..."
-            className="w-full pl-12 pr-4 py-3.5 bg-slate-900/40 border border-slate-800 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200 placeholder:text-slate-555"
+            className="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-800 placeholder:text-slate-400 shadow-sm"
           />
         </div>
 
         {/* Dropdown Card Filter - Hide for Business Owner */}
         {!isOwner && (
           <div className="relative flex items-center">
-            <Filter className="absolute left-4 w-5 h-5 text-slate-500 pointer-events-none" />
+            <Filter className="absolute left-4 w-4 h-4 text-slate-400 pointer-events-none" />
             <select
               value={selectedCardId}
               onChange={(e) => setSelectedCardId(e.target.value)}
-              className="w-full pl-12 pr-4 py-3.5 bg-slate-900/40 border border-slate-800 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all text-slate-200 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[size:0.65rem_auto] bg-[position:right_1.25rem_center] bg-no-repeat"
+              className="w-full pl-11 pr-8 py-3 bg-white border border-slate-200 focus:border-indigo-500 focus:outline-none rounded-xl text-xs transition-all text-slate-700 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[size:0.55rem_auto] bg-[position:right_0.75rem_center] bg-no-repeat"
             >
-              <option value="all" className="bg-slate-950">Show All Business Cards</option>
+              <option value="all">Show All Business Cards</option>
               {cards.map(biz => (
-                <option key={biz.id} value={biz.id} className="bg-slate-950">
+                <option key={biz.id} value={biz.id}>
                   {biz.businessName}
                 </option>
               ))}
@@ -215,7 +213,7 @@ export default function LeadsHubPage() {
 
       {/* Grid of Leads */}
       {filteredLeads.length === 0 ? (
-        <div className="p-12 text-center bg-slate-900/20 border border-slate-850 rounded-2xl text-slate-500 text-sm">
+        <div className="p-12 text-center bg-white border border-slate-200 rounded-2xl text-slate-500 text-xs font-medium">
           {!isOwner && selectedCardId === 'all'
             ? 'Select a business from the dropdown above to view its leads and enquiries.'
             : searchQuery || selectedCardId !== 'all' 
@@ -229,22 +227,22 @@ export default function LeadsHubPage() {
             return (
               <div 
                 key={lead.id}
-                className="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-5 md:p-6 shadow-md hover:border-slate-700/60 transition-all flex flex-col justify-between space-y-4"
+                className="bg-white border border-slate-200 rounded-2xl p-5 md:p-6 shadow-sm hover:border-slate-350 transition-all flex flex-col justify-between space-y-4"
               >
                 {/* Header info */}
                 <div className="flex items-start justify-between gap-4">
-                  <div className="min-w-0">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-600/10 border border-indigo-500/20 rounded-full text-xs font-bold text-indigo-400 mb-2 truncate max-w-full">
-                      <Briefcase className="w-3.5 h-3.5" />
+                  <div className="min-w-0 text-left">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 border border-indigo-105 rounded-full text-[10px] font-black text-indigo-700 mb-2 uppercase tracking-wide truncate max-w-full">
+                      <Briefcase className="w-3.5 h-3.5 text-indigo-600" />
                       {business?.businessName || 'Business Card'}
                     </span>
-                    <h3 className="text-base font-extrabold text-slate-100 truncate">
+                    <h3 className="text-base font-extrabold text-slate-900 truncate">
                       {lead.name}
                     </h3>
                   </div>
                   
-                  <span className="text-[10px] text-slate-500 font-bold bg-slate-950/60 border border-slate-850 px-2.5 py-1 rounded-full whitespace-nowrap flex items-center gap-1">
-                    <Calendar className="w-3.5 h-3.5 text-slate-500" />
+                  <span className="text-[10px] text-slate-500 font-bold bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-full whitespace-nowrap flex items-center gap-1">
+                    <Calendar className="w-3.5 h-3.5 text-slate-400" />
                     {new Date(lead.createdAt).toLocaleDateString(undefined, {
                       year: 'numeric',
                       month: 'short',
@@ -254,38 +252,38 @@ export default function LeadsHubPage() {
                 </div>
 
                 {/* Message Body */}
-                <div className="p-3 bg-slate-950/60 border border-slate-850 rounded-xl text-xs leading-relaxed text-slate-300 italic">
+                <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs leading-relaxed text-slate-600 italic text-left">
                   &ldquo;{lead.message}&rdquo;
                 </div>
 
                 {/* Contact Footer Links */}
-                <div className="pt-3 border-t border-slate-850 flex flex-wrap items-center justify-between gap-3">
-                  <div className="flex flex-col gap-1 text-[11px] text-slate-400">
-                    <a href={`tel:${lead.mobile}`} className="flex items-center gap-1.5 hover:text-indigo-400 transition-colors">
-                      <Phone className="w-3.5 h-3.5 text-slate-500" />
+                <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex flex-col gap-1 text-[11px] text-slate-550 font-semibold text-left">
+                    <a href={`tel:${lead.mobile}`} className="flex items-center gap-1.5 hover:text-indigo-700 transition-colors">
+                      <Phone className="w-3.5 h-3.5 text-slate-400" />
                       {lead.mobile}
                     </a>
-                    <a href={`mailto:${lead.email}`} className="flex items-center gap-1.5 hover:text-indigo-400 transition-colors">
-                      <Mail className="w-3.5 h-3.5 text-slate-500" />
+                    <a href={`mailto:${lead.email}`} className="flex items-center gap-1.5 hover:text-indigo-700 transition-colors">
+                      <Mail className="w-3.5 h-3.5 text-slate-400" />
                       {lead.email}
                     </a>
                   </div>
 
                   {deleteConfirmId === lead.id ? (
-                    <div className="flex items-center bg-red-950/20 border border-red-900/30 p-1.5 rounded-lg gap-2 text-xs">
-                      <span className="text-red-400 font-bold flex items-center gap-1">
+                    <div className="flex items-center bg-rose-50 border border-rose-100 p-1.5 rounded-xl gap-2 text-xs">
+                      <span className="text-rose-700 font-bold flex items-center gap-1">
                         <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
                         Delete?
                       </span>
                       <button
                         onClick={() => handleDelete(lead.id)}
-                        className="px-2 py-0.5 bg-red-600 hover:bg-red-500 text-white rounded font-bold text-[10px]"
+                        className="px-2 py-0.5 bg-rose-600 hover:bg-rose-700 text-white rounded font-bold text-[10px]"
                       >
                         Confirm
                       </button>
                       <button
                         onClick={() => setDeleteConfirmId(null)}
-                        className="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-semibold text-[10px]"
+                        className="px-2 py-0.5 bg-slate-200 hover:bg-slate-350 text-slate-700 rounded font-bold text-[10px]"
                       >
                         No
                       </button>
@@ -293,7 +291,7 @@ export default function LeadsHubPage() {
                   ) : (
                     <button
                       onClick={() => setDeleteConfirmId(lead.id)}
-                      className="p-2 text-slate-500 hover:text-red-400 hover:bg-red-950/20 rounded-lg transition-colors"
+                      className="p-2 text-slate-400 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors"
                       title="Delete Lead Record"
                     >
                       <Trash2 className="w-4.5 h-4.5" />
