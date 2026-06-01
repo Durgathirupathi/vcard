@@ -46,6 +46,12 @@ export default function LandingPage() {
             <Link href="/contact" className="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-950 transition-colors flex items-center gap-1">
               Contact Us
             </Link>
+            <Link 
+              href="/login" 
+              className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-755 text-white rounded-xl text-xs font-black shadow-sm transition-colors"
+            >
+              Login
+            </Link>
           </div>
         </div>
       </nav>

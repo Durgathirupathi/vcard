@@ -37,13 +37,21 @@ export default function ContactPage() {
             </span>
           </Link>
 
-          <div className="flex items-center gap-2">
-            <div className="p-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-indigo-650">
-              <Sparkles className="w-4 h-4" />
+          <div className="flex items-center gap-4">
+            <Link 
+              href="/login" 
+              className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-755 text-white rounded-xl text-xs font-black shadow-sm transition-colors"
+            >
+              Login
+            </Link>
+            <div className="flex items-center gap-2">
+              <div className="p-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-indigo-650">
+                <Sparkles className="w-4 h-4" />
+              </div>
+              <span className="font-extrabold text-sm tracking-tight text-slate-900">
+                VCard Studio
+              </span>
             </div>
-            <span className="font-extrabold text-sm tracking-tight text-slate-900">
-              VCard Studio
-            </span>
           </div>
         </div>
       </nav>

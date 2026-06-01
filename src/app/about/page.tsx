@@ -20,8 +20,14 @@ export default function AboutUsPage() {
           </Link>
 
           <div className="flex items-center gap-6">
-            <Link href="/contact" className="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-950 transition-colors">
+            <Link href="/contact" className="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-955 transition-colors">
               Contact Us
+            </Link>
+            <Link 
+              href="/login" 
+              className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-755 text-white rounded-xl text-xs font-black shadow-sm transition-colors"
+            >
+              Login
             </Link>
             <div className="flex items-center gap-2">
               <div className="p-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-indigo-650">
