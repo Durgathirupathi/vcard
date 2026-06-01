@@ -42,14 +42,10 @@ export function sanitizeUrl(url: string | undefined): string {
 
 /**
  * Validates text inputs against potential XSS injection attacks.
- * Replaces basic HTML entities to keep data rendering safe.
+ * Strips HTML and Script tags to prevent layout disruptions or script execution
+ * while preserving standard dynamic text rendering in React.
  */
 export function sanitizeText(text: string | undefined): string {
   if (!text) return '';
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;');
+  return text.replace(/<[^>]*>/g, '');
 }

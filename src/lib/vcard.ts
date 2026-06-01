@@ -30,7 +30,7 @@ export const generateVCardText = (card: BusinessCard): string => {
   parts.push(`REV:${new Date().toISOString()}`);
   parts.push('END:VCARD');
 
-  return parts.join('\n');
+  return parts.join('\r\n');
 };
 
 export const downloadVCard = (card: BusinessCard): void => {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { uploadToImageBB } from '../../lib/imagebb';
 import { UploadCloud, Image as ImageIcon, Trash2, ShieldAlert, CheckCircle, RefreshCw } from 'lucide-react';
 
@@ -24,6 +24,16 @@ export default function ImageUpload({
   const [progress, setProgress] = useState(0); // Progress tracker (simulated smooth state)
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Clean up any active timers on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, []);
 
   // Class helper to map design requirements
   const getAspectClass = () => {
@@ -46,7 +56,10 @@ export default function ImageUpload({
     setProgress(10);
 
     // Simulated progress increments
-    const progressTimer = setInterval(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+    timerRef.current = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 85) return prev;
         return prev + 15;
@@ -55,7 +68,10 @@ export default function ImageUpload({
 
     try {
       const res = await uploadToImageBB(file);
-      clearInterval(progressTimer);
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
       setProgress(100);
       setTimeout(() => {
         onChange(res.data.url);
@@ -63,7 +79,10 @@ export default function ImageUpload({
         setProgress(0);
       }, 300);
     } catch (err: unknown) {
-      clearInterval(progressTimer);
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
       setLoading(false);
       setProgress(0);
       const errMsg = err instanceof Error ? err.message : 'Uploading encountered a network error.';

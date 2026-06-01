@@ -20,8 +20,8 @@ service cloud.firestore {
          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'business_owner' &&
          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.businessId == businessId) ||
         // Option 2: check if business document ownerUid matches request.auth.uid
-        (exists(/databases/$(database)/documents/businesses/{businessId}) &&
-         get(/databases/$(database)/documents/businesses/{businessId}).data.ownerUid == request.auth.uid)
+        (exists(/databases/$(database)/documents/businesses/$(businessId)) &&
+         get(/databases/$(database)/documents/businesses/$(businessId)).data.ownerUid == request.auth.uid)
       );
     }
 
@@ -44,41 +44,33 @@ service cloud.firestore {
     // SERVICES COLLECTION
     match /services/{serviceId} {
       allow read: if true;
-      allow write: if isSuperAdmin() || 
-        (isAuthenticated() && (
-          isBusinessOwner(request.resource.data.businessId) || 
-          isBusinessOwner(resource.data.businessId)
-        ));
+      allow create: if isSuperAdmin() || (isAuthenticated() && isBusinessOwner(request.resource.data.businessId));
+      allow update: if isSuperAdmin() || (isAuthenticated() && isBusinessOwner(request.resource.data.businessId) && isBusinessOwner(resource.data.businessId));
+      allow delete: if isSuperAdmin() || (isAuthenticated() && isBusinessOwner(resource.data.businessId));
     }
 
     // GALLERY COLLECTION
     match /gallery/{imageId} {
       allow read: if true;
-      allow write: if isSuperAdmin() || 
-        (isAuthenticated() && (
-          isBusinessOwner(request.resource.data.businessId) || 
-          isBusinessOwner(resource.data.businessId)
-        ));
+      allow create: if isSuperAdmin() || (isAuthenticated() && isBusinessOwner(request.resource.data.businessId));
+      allow update: if isSuperAdmin() || (isAuthenticated() && isBusinessOwner(request.resource.data.businessId) && isBusinessOwner(resource.data.businessId));
+      allow delete: if isSuperAdmin() || (isAuthenticated() && isBusinessOwner(resource.data.businessId));
     }
 
     // VIDEOS COLLECTION
     match /videos/{videoId} {
       allow read: if true;
-      allow write: if isSuperAdmin() || 
-        (isAuthenticated() && (
-          isBusinessOwner(request.resource.data.businessId) || 
-          isBusinessOwner(resource.data.businessId)
-        ));
+      allow create: if isSuperAdmin() || (isAuthenticated() && isBusinessOwner(request.resource.data.businessId));
+      allow update: if isSuperAdmin() || (isAuthenticated() && isBusinessOwner(request.resource.data.businessId) && isBusinessOwner(resource.data.businessId));
+      allow delete: if isSuperAdmin() || (isAuthenticated() && isBusinessOwner(resource.data.businessId));
     }
 
     // TESTIMONIALS COLLECTION
     match /testimonials/{testimonialId} {
       allow read: if true;
-      allow write: if isSuperAdmin() || 
-        (isAuthenticated() && (
-          isBusinessOwner(request.resource.data.businessId) || 
-          isBusinessOwner(resource.data.businessId)
-        ));
+      allow create: if isSuperAdmin() || (isAuthenticated() && isBusinessOwner(request.resource.data.businessId));
+      allow update: if isSuperAdmin() || (isAuthenticated() && isBusinessOwner(request.resource.data.businessId) && isBusinessOwner(resource.data.businessId));
+      allow delete: if isSuperAdmin() || (isAuthenticated() && isBusinessOwner(resource.data.businessId));
     }
 
     // LEADS COLLECTION

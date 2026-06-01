@@ -62,10 +62,10 @@ export default function EditCardPage({ params }: { params: Promise<{ id: string 
     testimonials: Testimonial[];
   }) => {
     await dbService.saveBusiness(data.card);
-    await dbService.saveServices(id, data.services);
-    await dbService.saveGalleryImages(id, data.gallery);
-    await dbService.saveVideos(id, data.videos);
-    await dbService.saveTestimonials(id, data.testimonials);
+    await dbService.saveServices(data.card.id, data.services);
+    await dbService.saveGalleryImages(data.card.id, data.gallery);
+    await dbService.saveVideos(data.card.id, data.videos);
+    await dbService.saveTestimonials(data.card.id, data.testimonials);
   };
 
   if (loading) {
