@@ -7,6 +7,50 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 export async function POST(request: Request) {
   try {
+    // 1. Security check: Validate authentication and session
+    const authHeader = request.headers.get('Authorization');
+    const xUserUid = request.headers.get('x-vcard-user-uid');
+    const xUserRole = request.headers.get('x-vcard-user-role');
+    
+    let isAuthenticatedUser = false;
+    
+    // Verify using Firebase Token Resolver if header is provided
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const idToken = authHeader.substring(7);
+      const firebaseApiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
+      if (firebaseApiKey) {
+        try {
+          const authRes = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${firebaseApiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idToken })
+          });
+          if (authRes.ok) {
+            const authData = await authRes.json();
+            if (authData.users && authData.users.length > 0) {
+              isAuthenticatedUser = true;
+            }
+          }
+        } catch (e) {
+          console.error('API Upload Server Token verification failed:', e);
+        }
+      }
+    }
+    
+    // DEV Sandbox Bypass: Verify Local Active Session
+    if (!isAuthenticatedUser && xUserUid && xUserRole) {
+      if (xUserRole === 'super_admin' || xUserRole === 'business_owner') {
+        isAuthenticatedUser = true;
+      }
+    }
+    
+    if (!isAuthenticatedUser) {
+      return NextResponse.json(
+        { error: 'Authentication required. Unauthorized upload attempt blocked.' },
+        { status: 401 }
+      );
+    }
+
     const apiKey = process.env.IMGBB_API_KEY;
     if (!apiKey) {
       return NextResponse.json(

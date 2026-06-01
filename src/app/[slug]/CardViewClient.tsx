@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { BusinessCard, Service, GalleryImage, Video, Testimonial, Lead, AnalyticsEntry } from '../../types';
 import { dbService } from '../../lib/firestore';
+import { sanitizeUrl, sanitizeText } from '../../lib/security';
 
 // Import the 5 custom templates
 import Template1 from '../../components/templates/Template1';
@@ -75,13 +76,14 @@ export default function CardViewClient({
   // LEAD / QUICK ENQUIRY CAPTURE SUBMISSION
   // ==========================================
   const handleSubmitLead = async (leadDetails: { name: string; mobile: string; email: string; message: string }) => {
+    // Sanitize lead details to prevent HTML or script injection
     const lead: Lead = {
       id: `lead_${Date.now()}`,
       businessId: card.id,
-      name: leadDetails.name,
-      mobile: leadDetails.mobile,
-      email: leadDetails.email,
-      message: leadDetails.message,
+      name: sanitizeText(leadDetails.name.trim()),
+      mobile: sanitizeText(leadDetails.mobile.trim()),
+      email: sanitizeText(leadDetails.email.trim()),
+      message: sanitizeText(leadDetails.message.trim()),
       createdAt: new Date().toISOString()
     };
 
@@ -99,11 +101,30 @@ export default function CardViewClient({
   };
 
   // ==========================================
-  // DYNAMIC TEMPLATE DISPATCHER
+  // DYNAMIC TEMPLATE DISPATCHER WITH SANITIZATION
   // ==========================================
   const renderTemplate = () => {
+    // Centralized sanitize URL mapping for all output links (Stored XSS mitigation)
+    const sanitizedCard: BusinessCard = {
+      ...card,
+      website: sanitizeUrl(card.website),
+      mapsLink: sanitizeUrl(card.mapsLink),
+      facebookUrl: sanitizeUrl(card.facebookUrl),
+      instagramUrl: sanitizeUrl(card.instagramUrl),
+      linkedinUrl: sanitizeUrl(card.linkedinUrl),
+      youtubeUrl: sanitizeUrl(card.youtubeUrl),
+      telegramUrl: sanitizeUrl(card.telegramUrl),
+      twitterUrl: sanitizeUrl(card.twitterUrl),
+      // Clean display names & designation from raw tags too
+      ownerName: sanitizeText(card.ownerName),
+      businessName: sanitizeText(card.businessName),
+      designation: sanitizeText(card.designation),
+      category: sanitizeText(card.category),
+      description: sanitizeText(card.description),
+    };
+
     const props = {
-      card,
+      card: sanitizedCard,
       services,
       gallery,
       videos,
@@ -129,3 +150,4 @@ export default function CardViewClient({
 
   return <>{renderTemplate()}</>;
 }
+

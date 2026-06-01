@@ -246,6 +246,19 @@ const setLocalData = <T>(key: string, data: T): void => {
 // ==========================================
 
 export const dbService = {
+  // Scoped authorization check for multi-tenant protection (Defense-in-depth)
+  _authorizeTenant(businessId: string): void {
+    if (typeof window !== 'undefined') {
+      const userStr = localStorage.getItem('vcard_active_user');
+      if (userStr) {
+        const u = JSON.parse(userStr);
+        if (u.role === 'business_owner' && u.businessId !== businessId) {
+          throw new Error(`Security Violation: Unauthorized operation. You cannot modify card details for: "${businessId}".`);
+        }
+      }
+    }
+  },
+
   // USER PROFILES & ACCOUNTS
   async getUserProfile(uid: string): Promise<AppUser | null> {
     if (isFirebaseConfigured && db) {
@@ -398,6 +411,7 @@ export const dbService = {
   },
 
   async saveBusiness(card: BusinessCard): Promise<void> {
+    this._authorizeTenant(card.id);
     if (isFirebaseConfigured && db) {
       try {
         const docRef = doc(db, 'businesses', card.id);
@@ -418,6 +432,7 @@ export const dbService = {
   },
 
   async deleteBusiness(id: string): Promise<void> {
+    this._authorizeTenant(id);
     if (isFirebaseConfigured && db) {
       try {
         await deleteDoc(doc(db, 'businesses', id));
@@ -467,6 +482,7 @@ export const dbService = {
   },
 
   async saveServices(businessId: string, services: Service[]): Promise<void> {
+    this._authorizeTenant(businessId);
     if (services.length > PORTAL_LIMITS.MAX_SERVICES) {
       throw new Error(`You have reached the maximum limit of ${PORTAL_LIMITS.MAX_SERVICES} services. Please remove an existing service before adding a new one.`);
     }
@@ -508,6 +524,7 @@ export const dbService = {
   },
 
   async saveGalleryImages(businessId: string, images: GalleryImage[]): Promise<void> {
+    this._authorizeTenant(businessId);
     if (images.length > PORTAL_LIMITS.MAX_GALLERY_IMAGES) {
       throw new Error(`You have reached the maximum limit of ${PORTAL_LIMITS.MAX_GALLERY_IMAGES} gallery images.`);
     }
@@ -548,6 +565,7 @@ export const dbService = {
   },
 
   async saveVideos(businessId: string, videos: Video[]): Promise<void> {
+    this._authorizeTenant(businessId);
     if (isFirebaseConfigured && db) {
       try {
         const q = query(collection(db, 'videos'), where('businessId', '==', businessId));
@@ -584,6 +602,7 @@ export const dbService = {
   },
 
   async saveTestimonials(businessId: string, testimonials: Testimonial[]): Promise<void> {
+    this._authorizeTenant(businessId);
     if (isFirebaseConfigured && db) {
       try {
         const q = query(collection(db, 'testimonials'), where('businessId', '==', businessId));

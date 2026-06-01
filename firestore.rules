@@ -1,0 +1,104 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isSuperAdmin() {
+      return isAuthenticated() && 
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super_admin';
+    }
+
+    function isBusinessOwner(businessId) {
+      return isAuthenticated() && (
+        // Option 1: check if the user profile matches role & businessId
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'business_owner' &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.businessId == businessId) ||
+        // Option 2: check if business document ownerUid matches request.auth.uid
+        (exists(/databases/$(database)/documents/businesses/{businessId}) &&
+         get(/databases/$(database)/documents/businesses/{businessId}).data.ownerUid == request.auth.uid)
+      );
+    }
+
+    // USERS COLLECTION
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isSuperAdmin());
+      allow write: if isAuthenticated() && (request.auth.uid == userId || isSuperAdmin());
+    }
+
+    // BUSINESSES COLLECTION
+    match /businesses/{businessId} {
+      // Anyone can view a business card
+      allow read: if true;
+      // Only Super Admin can create or delete business cards
+      allow create, delete: if isSuperAdmin();
+      // Super Admin or the designated Business Owner can update the business card
+      allow update: if isSuperAdmin() || isBusinessOwner(businessId);
+    }
+
+    // SERVICES COLLECTION
+    match /services/{serviceId} {
+      allow read: if true;
+      allow write: if isSuperAdmin() || 
+        (isAuthenticated() && (
+          isBusinessOwner(request.resource.data.businessId) || 
+          isBusinessOwner(resource.data.businessId)
+        ));
+    }
+
+    // GALLERY COLLECTION
+    match /gallery/{imageId} {
+      allow read: if true;
+      allow write: if isSuperAdmin() || 
+        (isAuthenticated() && (
+          isBusinessOwner(request.resource.data.businessId) || 
+          isBusinessOwner(resource.data.businessId)
+        ));
+    }
+
+    // VIDEOS COLLECTION
+    match /videos/{videoId} {
+      allow read: if true;
+      allow write: if isSuperAdmin() || 
+        (isAuthenticated() && (
+          isBusinessOwner(request.resource.data.businessId) || 
+          isBusinessOwner(resource.data.businessId)
+        ));
+    }
+
+    // TESTIMONIALS COLLECTION
+    match /testimonials/{testimonialId} {
+      allow read: if true;
+      allow write: if isSuperAdmin() || 
+        (isAuthenticated() && (
+          isBusinessOwner(request.resource.data.businessId) || 
+          isBusinessOwner(resource.data.businessId)
+        ));
+    }
+
+    // LEADS COLLECTION
+    match /leads/{leadId} {
+      // Anyone can submit an inquiry lead
+      allow create: if true;
+      // Only Super Admin or the designated Business Owner can read or delete leads
+      allow read, delete: if isSuperAdmin() || 
+        (isAuthenticated() && isBusinessOwner(resource.data.businessId));
+    }
+
+    // ANALYTICS COLLECTION
+    match /analytics/{analyticsId} {
+      // Anyone can record analytics event
+      allow create: if true;
+      // Only Super Admin or the designated Business Owner can read analytics
+      allow read: if isSuperAdmin() || 
+        (isAuthenticated() && isBusinessOwner(resource.data.businessId));
+      // Analytics should never be updated or deleted by normal users
+      allow update, delete: if isSuperAdmin();
+    }
+  }
+}

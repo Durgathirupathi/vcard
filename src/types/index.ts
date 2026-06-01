@@ -34,9 +34,7 @@ export interface BusinessCard {
   ownerUid?: string;
   ownerEmail?: string;
   ownerPassword?: string;
-  ownerEmail?: string;
   status?: 'active' | 'inactive';
-  ownerPassword?: string; // transient, not persisted
 }
 
 export interface Service {

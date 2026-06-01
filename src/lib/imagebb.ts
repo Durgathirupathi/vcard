@@ -130,9 +130,32 @@ export async function uploadToImageBB(file: File): Promise<ImgBBUploadResponse> 
   const formData = new FormData();
   formData.append('image', fileToUpload);
 
-  // 4. API Request proxying
+  // 4. Secure API Request headers binding (Tenant validation)
+  const headers: Record<string, string> = {};
+  if (typeof window !== 'undefined') {
+    try {
+      const userStr = localStorage.getItem('vcard_active_user');
+      if (userStr) {
+        const u = JSON.parse(userStr);
+        headers['x-vcard-user-uid'] = u.uid || '';
+        headers['x-vcard-user-role'] = u.role || '';
+      }
+      
+      // If Firebase Auth has a logged in user, fetch their cryptographically secure ID Token
+      const { auth } = await import('./firebase');
+      if (auth && auth.currentUser) {
+        const idToken = await auth.currentUser.getIdToken();
+        headers['Authorization'] = `Bearer ${idToken}`;
+      }
+    } catch (e) {
+      console.warn('Skipped dynamic session binding:', e);
+    }
+  }
+
+  // 5. API Request proxying
   const response = await fetch('/api/upload', {
     method: 'POST',
+    headers,
     body: formData,
   });
 
@@ -144,3 +167,4 @@ export async function uploadToImageBB(file: File): Promise<ImgBBUploadResponse> 
 
   return resData as ImgBBUploadResponse;
 }
+
