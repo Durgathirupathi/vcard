@@ -7,8 +7,7 @@ import {
   deleteDoc, 
   query, 
   where, 
-  orderBy,
-  addDoc
+  orderBy
 } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from './firebase';
 import { BusinessCard, Service, GalleryImage, Video, Testimonial, Lead, AnalyticsEntry, AppUser } from '../types';

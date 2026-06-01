@@ -14,9 +14,7 @@ import {
   MessageSquare, 
   Star, 
   Check, 
-  ExternalLink,
-  ChevronRight,
-  ShieldAlert
+  ExternalLink
 } from 'lucide-react';
 
 // Custom Brand SVGs

@@ -15,7 +15,6 @@ import {
   Star, 
   Check, 
   ExternalLink,
-  ChevronRight,
   ShoppingBag,
   MessageCircle
 } from 'lucide-react';
