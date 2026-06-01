@@ -9,7 +9,7 @@ import {
   Send, 
   Smartphone, 
   Zap, 
-  Compass 
+  Info 
 } from 'lucide-react';
 
 export default function LandingPage() {
@@ -21,76 +21,74 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-slate-950 text-slate-100 font-sans overflow-hidden">
-      {/* Glow backgrounds */}
-      <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[50%] bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[50%] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none" />
-
-      {/* Grid overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-25" />
-
-      {/* Nav Header */}
-      <nav className="relative z-10 max-w-7xl mx-auto px-6 py-6 flex items-center justify-between border-b border-slate-900">
-        <div className="flex items-center gap-2">
-          <div className="p-2 bg-indigo-600/10 border border-indigo-500/20 rounded-xl text-indigo-400">
-            <Sparkles className="w-5 h-5 animate-pulse" />
+    <div className="relative min-h-screen bg-slate-50 text-slate-800 font-sans flex flex-col justify-between">
+      
+      {/* Navigation Header - Clean Corporate White Styling */}
+      <nav className="relative z-10 bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="p-2 bg-slate-100 border border-slate-200 rounded-xl text-slate-700">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <span className="font-extrabold text-lg tracking-tight text-slate-900">
+              VCard Studio
+            </span>
           </div>
-          <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-indigo-200 via-indigo-100 to-purple-200 bg-clip-text text-transparent">
-            VCard Studio
-          </span>
-        </div>
 
-        <Link
-          href="/login"
-          className="px-4 py-2 bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-slate-700 text-slate-200 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5"
-        >
-          Admin Console
-          <Compass className="w-4 h-4 text-indigo-400" />
-        </Link>
+          <div className="flex items-center gap-6">
+            <a href="#features" className="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-950 transition-colors">
+              Features
+            </a>
+            <Link href="/about" className="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-950 transition-colors flex items-center gap-1">
+              <Info className="w-3.5 h-3.5" />
+              About Us
+            </Link>
+          </div>
+        </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative z-10 max-w-4xl mx-auto text-center px-6 pt-20 pb-16 space-y-6">
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 bg-indigo-500/10 border border-indigo-500/20 rounded-full text-xs font-bold text-indigo-400 uppercase tracking-widest animate-bounce">
-          <Sparkles className="w-3.5 h-3.5" />
+      {/* Hero Section - Classic High-Readability Layout */}
+      <section className="relative z-10 max-w-4xl mx-auto text-center px-6 pt-24 pb-16 space-y-6">
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 bg-slate-100 border border-slate-200 rounded-full text-[10px] font-black text-slate-600 uppercase tracking-widest">
+          <Sparkles className="w-3.5 h-3.5 text-slate-650" />
           Digital Identity Suite
         </div>
 
-        <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-none bg-gradient-to-r from-white via-indigo-100 to-indigo-200 bg-clip-text text-transparent">
-          Craft Elite Digital <br className="hidden sm:inline" /> Business Profiles
+        <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-none text-slate-950">
+          Professional Digital <br className="hidden sm:inline" /> Business Profiles
         </h1>
 
-        <p className="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+        <p className="text-slate-500 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed font-medium">
           Create premium, highly responsive, and fast-loading virtual identity cards designed for modern agencies, designers, consultants, saree stores, and luxury brands.
         </p>
 
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
-            href="/login"
-            className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-950/40 hover:scale-[1.02] active:scale-100 transition-all flex items-center justify-center gap-2"
+            href="/about"
+            className="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-750 text-white rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 shadow-sm"
           >
-            Launch Admin Suite
+            Learn About Us
             <Send className="w-4 h-4" />
           </Link>
         </div>
       </section>
 
-      {/* Feature Grids */}
-      <section className="relative z-10 max-w-5xl mx-auto px-6 pb-24">
+      {/* Feature Grid Section */}
+      <section id="features" className="relative z-10 max-w-5xl mx-auto px-6 pb-24 scroll-mt-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {highlights.map((item, idx) => {
             const Icon = item.icon;
             return (
               <div 
                 key={idx}
-                className="p-6 bg-slate-900/40 border border-slate-800 rounded-2xl space-y-4 hover:border-slate-750 transition-colors shadow-md flex flex-col justify-between"
+                className="p-6 bg-white border border-slate-200 rounded-2xl space-y-4 hover:border-slate-350 transition-colors shadow-sm flex flex-col justify-between"
               >
-                <div className="p-3 bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 rounded-xl w-fit">
+                <div className="p-3 bg-slate-50 border border-slate-100 text-slate-700 rounded-xl w-fit">
                   <Icon className="w-5 h-5" />
                 </div>
                 <div className="space-y-1.5">
-                  <h3 className="text-sm font-bold text-slate-100">{item.title}</h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
+                  <h3 className="text-sm font-bold text-slate-950">{item.title}</h3>
+                  <p className="text-xs text-slate-500 leading-relaxed font-medium">{item.desc}</p>
                 </div>
               </div>
             );
@@ -98,9 +96,19 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="absolute bottom-6 inset-x-0 z-10 text-center text-slate-600 text-[10px] uppercase font-bold tracking-widest">
-        © VCard Studio. Premium Identity Systems.
+      {/* Clean Corporate Footer with Discreet Admin Link */}
+      <footer className="w-full bg-white border-t border-slate-200 py-10 text-center">
+        <div className="text-slate-500 text-[10px] uppercase font-bold tracking-widest">
+          © VCard Studio. Premium Identity Systems. All Rights Reserved.
+        </div>
+        <div className="mt-3">
+          <Link 
+            href="/login" 
+            className="text-[9px] font-bold uppercase tracking-wider text-slate-400 hover:text-slate-700 transition-colors hover:underline"
+          >
+            Administrative Console Login
+          </Link>
+        </div>
       </footer>
     </div>
   );

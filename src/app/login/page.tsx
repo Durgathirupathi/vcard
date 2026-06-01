@@ -139,121 +139,115 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center bg-slate-950 overflow-hidden text-slate-100 font-sans">
-      {/* Decorative Gradient Background Orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/20 blur-[120px] pointer-events-none animate-pulse" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-600/20 blur-[120px] pointer-events-none animate-pulse" />
+    <div className="min-h-screen w-full flex items-center justify-center bg-slate-50 text-slate-800 font-sans">
       
-      {/* Dynamic Grid Background Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-35" />
-
-      {/* Main Glassmorphic Panel */}
-      <div className="relative z-10 w-full max-w-md px-6 py-8 mx-4 bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded-2xl shadow-2xl shadow-indigo-950/20 flex flex-col items-center">
+      {/* Centered Classic White Panel */}
+      <div className="w-full max-w-md px-6 py-8 mx-4 bg-white border border-slate-200 rounded-2xl shadow-md flex flex-col items-center">
         
         {/* Shield Header */}
-        <div className="p-4 bg-indigo-600/10 border border-indigo-500/20 rounded-full mb-4 flex items-center justify-center text-indigo-400">
-          <ShieldCheck className="w-10 h-10 animate-bounce" />
+        <div className="p-4 bg-slate-100 border border-slate-200 rounded-full mb-4 flex items-center justify-center text-slate-700">
+          <ShieldCheck className="w-10 h-10" />
         </div>
 
-        <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-200 via-indigo-100 to-purple-200 bg-clip-text text-transparent">
-          VCard Portal
+        <h1 className="text-2xl font-black tracking-tight text-slate-900">
+          Administrative Portal
         </h1>
-        <p className="text-sm text-slate-400 mt-2 mb-8 text-center">
-          Secure Multi-Tenant administrative dashboard and analytics hub.
+        <p className="text-xs text-slate-500 mt-2 mb-8 text-center font-medium leading-relaxed">
+          Secure, multi-tenant administrative workspace for card configuration, metrics, and inquiry databases.
         </p>
 
         {/* Firebase Config Status Indicator */}
         {!isFirebaseConfigured && (
-          <div className="w-full flex items-start gap-3 p-3 bg-amber-950/40 border border-amber-800/30 rounded-xl mb-6 text-amber-300 text-xs">
-            <AlertTriangle className="w-5 h-5 flex-shrink-0 text-amber-400" />
+          <div className="w-full flex items-start gap-3 p-3.5 bg-amber-50 border border-amber-200 rounded-xl mb-6 text-amber-800 text-[11px] font-semibold leading-relaxed">
+            <AlertTriangle className="w-4.5 h-4.5 flex-shrink-0 text-amber-600 mt-0.5" />
             <div>
-              <span className="font-semibold block mb-0.5">Developer Sandbox Bypass Mode</span>
-              Firebase is offline. Local Storage registry handles multi-tenant credentials securely.
+              <span className="font-bold block mb-0.5 uppercase tracking-wide text-[10px]">Developer Sandbox Mode</span>
+              Firebase is offline. Local registry controls multi-tenant credentials securely.
             </div>
           </div>
         )}
 
         <form onSubmit={handleLogin} className="w-full flex flex-col gap-4">
           {/* Email Field */}
-          <div className="flex flex-col gap-1">
-            <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider pl-1">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[10px] font-bold text-slate-550 uppercase tracking-widest pl-1">
               Account Email
             </label>
             <div className="relative flex items-center">
-              <Mail className="absolute left-3 w-5 h-5 text-slate-500" />
+              <Mail className="absolute left-3.5 w-4.5 h-4.5 text-slate-400" />
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="owner@domain.com"
-                className="w-full pl-10 pr-4 py-3 bg-slate-950/80 border border-slate-850 hover:border-indigo-500/40 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all placeholder:text-slate-600"
+                className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:border-indigo-600 focus:bg-white focus:outline-none rounded-xl text-xs font-semibold text-slate-800 transition-colors placeholder:text-slate-400"
               />
             </div>
           </div>
 
           {/* Password Field */}
-          <div className="flex flex-col gap-1">
-            <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider pl-1">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[10px] font-bold text-slate-550 uppercase tracking-widest pl-1">
               Password
             </label>
             <div className="relative flex items-center">
-              <Key className="absolute left-3 w-5 h-5 text-slate-500" />
+              <Key className="absolute left-3.5 w-4.5 h-4.5 text-slate-400" />
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-3 bg-slate-950/80 border border-slate-850 hover:border-indigo-500/40 focus:border-indigo-500 focus:outline-none rounded-xl text-sm transition-all placeholder:text-slate-600"
+                className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 hover:border-slate-350 focus:border-indigo-600 focus:bg-white focus:outline-none rounded-xl text-xs font-semibold text-slate-800 transition-colors placeholder:text-slate-400"
               />
             </div>
           </div>
 
           {/* Feedback Messages */}
           {error && (
-            <div className="p-3 bg-red-950/40 border border-red-800/30 rounded-xl text-red-300 text-xs font-medium">
+            <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-800 text-xs font-semibold">
               {error}
             </div>
           )}
 
           {success && (
-            <div className="p-3 bg-emerald-950/40 border border-emerald-800/30 rounded-xl text-emerald-300 text-xs font-medium flex items-center justify-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              Access Granted! Loading Scoped Workspace...
+            <div className="p-3 bg-emerald-50 border border-emerald-250 rounded-xl text-emerald-800 text-xs font-bold flex items-center justify-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+              Access Granted! Redirecting...
             </div>
           )}
 
-          {/* Login Button */}
+          {/* Login Button - Clean Solid Style */}
           <button
             type="submit"
             disabled={loading || success}
-            className="w-full mt-2 py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-900/30 transition-all flex items-center justify-center gap-2 hover:scale-[1.02] disabled:opacity-50 disabled:scale-100"
+            className="w-full mt-2 py-3.5 bg-indigo-650 hover:bg-indigo-755 text-white rounded-xl text-xs font-black shadow-sm transition-colors flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-100 disabled:opacity-50 disabled:scale-100"
           >
-            {loading ? 'Authenticating...' : 'Authorize Login'}
+            {loading ? 'Authenticating...' : 'Authorize Access'}
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
 
         {/* Fallback Auto-Fill Quick Link */}
         {!isFirebaseConfigured && (
-          <div className="w-full flex flex-col gap-2 mt-6 pt-4 border-t border-slate-800/60">
-            <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider text-center">
-              Testing Identities
+          <div className="w-full flex flex-col gap-2 mt-8 pt-5 border-t border-slate-100">
+            <span className="text-[9px] uppercase font-black text-slate-400 tracking-widest text-center">
+              Identity Bypass Links
             </span>
             <div className="flex gap-2">
               <button
                 onClick={handleFillAdmin}
-                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-950 border border-slate-800 hover:border-indigo-500/30 rounded-xl text-xs text-slate-300 hover:text-white transition-colors"
+                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-50 border border-slate-200 hover:border-indigo-500/30 hover:bg-white rounded-xl text-[10px] font-bold text-slate-650 hover:text-slate-800 transition-all"
               >
-                <UserCheck className="w-3.5 h-3.5 text-indigo-400" />
+                <UserCheck className="w-3.5 h-3.5 text-indigo-600" />
                 Super Admin
               </button>
               <button
                 onClick={handleFillOwner}
-                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-950 border border-slate-800 hover:border-purple-500/30 rounded-xl text-xs text-slate-300 hover:text-white transition-colors"
+                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-50 border border-slate-200 hover:border-purple-500/30 hover:bg-white rounded-xl text-[10px] font-bold text-slate-650 hover:text-slate-800 transition-all"
               >
-                <UserCheck className="w-3.5 h-3.5 text-purple-400" />
+                <UserCheck className="w-3.5 h-3.5 text-purple-600" />
                 Apex Owner
               </button>
             </div>
