@@ -1,5 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { dbService } from '../../lib/firestore';
 import CardViewClient from './CardViewClient';
 
@@ -53,11 +54,22 @@ export default async function PublicCardPage({ params }: PageProps) {
 
   if (!card) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-950 text-slate-400 p-6 text-center">
-        <h1 className="text-2xl font-bold text-white mb-2">Profile Not Found</h1>
-        <p className="text-sm max-w-md">
-          The digital business card matching the slug <span className="text-indigo-400 font-mono">&quot;/{slug}&quot;</span> does not exist or has been deleted by the administrator.
-        </p>
+      <div className="relative min-h-screen flex flex-col items-center justify-center bg-stone-50 text-stone-900 p-6 text-center selection:bg-brown-200/50 selection:text-brown-900">
+        <div className="absolute inset-0 grid-accent opacity-30 pointer-events-none z-0"></div>
+        <div className="relative z-10 max-w-md w-full bg-white border border-brown-200 rounded-3xl p-8 sm:p-10 shadow-lg text-center space-y-4">
+          <h1 className="text-3xl font-black text-stone-900 font-display">Profile Not Found</h1>
+          <p className="text-xs sm:text-sm text-stone-500 leading-relaxed font-medium">
+            The digital business card matching the slug <span className="text-brown-755 font-mono font-bold">&quot;/{slug}&quot;</span> does not exist or has been archived by the administrator.
+          </p>
+          <div className="pt-2">
+            <Link
+              href="/"
+              className="w-full px-6 py-3.5 bg-brown-700 hover:bg-brown-755 text-white rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 shadow-md"
+            >
+              Return to Homepage
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }

@@ -29,10 +29,8 @@ import {
   Smartphone,
   Laptop,
   Tablet,
-  CheckCircle,
   Database,
-  CloudLightning,
-  Send
+  CloudLightning
 } from 'lucide-react';
 
 export default function AdminDashboard() {

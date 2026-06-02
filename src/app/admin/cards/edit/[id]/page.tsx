@@ -52,7 +52,7 @@ export default function EditCardPage({ params }: { params: Promise<{ id: string 
       }
     }
     loadData();
-  }, [id]);
+  }, [id, router]);
 
   const handleSave = async (data: {
     card: BusinessCard;
@@ -72,8 +72,8 @@ export default function EditCardPage({ params }: { params: Promise<{ id: string 
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" />
-          <span className="text-sm font-semibold text-slate-400">Loading card configurations...</span>
+          <div className="w-10 h-10 border-4 border-brown-700 border-t-transparent rounded-full animate-spin" />
+          <span className="text-sm font-bold text-brown-900 uppercase tracking-widest">Loading card configurations...</span>
         </div>
       </div>
     );
@@ -81,7 +81,7 @@ export default function EditCardPage({ params }: { params: Promise<{ id: string 
 
   if (!card) {
     return (
-      <div className="p-8 text-center bg-slate-905 border border-slate-850 rounded-2xl text-slate-400">
+      <div className="p-8 text-center bg-brown-50 border border-brown-200 rounded-2xl text-brown-755 font-semibold">
         The requested digital business card configuration details could not be found.
       </div>
     );
